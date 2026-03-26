@@ -1,0 +1,66 @@
+.board-page {
+    padding: 2% 3%;
+    background: #f4f6f8;
+}
+
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2%;
+}
+
+.board-header h2 {
+    font-size: 180%;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: #5b5ef7;
+    color: white;
+    border: none;
+    padding: 0.8% 1.5%;
+    border-radius: 8px;
+    font-size: 90%;
+    cursor: pointer;
+}
+
+.board-columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.board-col {
+    width: 100%;
+}
+
+.board-col h3 {
+    font-size: 110%;
+    margin-bottom: 8%;
+    color: #444;
+}
+
+.task-card {
+    background: white;
+    border-radius: 10px;
+    padding: 6% 6%;
+    margin-bottom: 6%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: 0.2s;
+}
+
+.task-card:hover {
+    transform: translateY(-3%);
+}
+
+.task-card h4 {
+    font-size: 95%;
+    font-weight: 600;
+    margin-bottom: 3%;
+}
+
+.task-card p {
+    font-size: 80%;
+    color: #777;
+}
