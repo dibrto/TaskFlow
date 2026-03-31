@@ -6,10 +6,10 @@ import { AuthService } from "@services/auth/auth.service";
 @Component({
     selector: "app-register",
     imports: [RouterLink, FormsModule],
-    templateUrl: "./register.html",
-    styleUrl: "./register.css",
+    templateUrl: "./register.component.html",
+    styleUrl: "./register.component.css",
 })
-export class Register {
+export class RegisterComponent {
     private authService = inject(AuthService);
 
     onRegister() {

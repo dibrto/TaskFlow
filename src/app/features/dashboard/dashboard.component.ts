@@ -3,10 +3,10 @@ import { Component } from "@angular/core";
 @Component({
     selector: "app-dashboard",
     imports: [],
-    templateUrl: "./dashboard.html",
-    styleUrl: "./dashboard.css",
+    templateUrl: "./dashboard.component.html",
+    styleUrl: "./dashboard.component.css",
 })
-export class Dashboard {
+export class DashboardComponent {
     boards: any[] = [
         { title: "Project Alpha", tasks: 12 },
         { title: "Website Redesign", tasks: 8 },

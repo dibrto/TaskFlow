@@ -3,10 +3,10 @@ import { Component } from "@angular/core";
 @Component({
     selector: "app-board",
     imports: [],
-    templateUrl: "./board.html",
-    styleUrl: "./board.css",
+    templateUrl: "./board.component.html",
+    styleUrl: "./board.component.css",
 })
-export class Board {
+export class BoardComponent {
     newTasks: any[] = [
         { title: "Login UI", description: "Create login page" },
         { title: "API Setup", description: "Setup backend auth" },

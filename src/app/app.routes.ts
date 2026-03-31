@@ -1,22 +1,22 @@
 import { Routes } from "@angular/router";
 
-import { Login } from "./features/auth/login/login";
-import { Register } from "./features/auth/register/register";
+import { LoginComponent } from "@features/auth/login/login.component";
+import { RegisterComponent } from "@features/auth/register/register.component";
 
-import { MainLayout } from "./layout/main-layout/main-layout";
-import { Dashboard } from "./features/dashboard/dashboard";
-import { Board } from "./features/board/board";
+import { MainLayoutComponent } from "@layout/main-layout/main-layout.component";
+import { DashboardComponent } from "@features/dashboard/dashboard.component";
+import { BoardComponent } from "@features/board/board.component";
 
 export const routes: Routes = [
     {
         path: "",
-        component: MainLayout,
+        component: MainLayoutComponent,
         children: [
-            { path: "dashboard", component: Dashboard },
-            { path: "board", component: Board },
+            { path: "dashboard", component: DashboardComponent },
+            { path: "board", component: BoardComponent },
         ],
     },
 
-    { path: "login", component: Login },
-    { path: "register", component: Register },
+    { path: "login", component: LoginComponent },
+    { path: "register", component: RegisterComponent },
 ];
