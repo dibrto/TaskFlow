@@ -7,7 +7,7 @@
 /* SIDEBAR */
 
 .sidebar {
-    width: 220px;
+    min-width: 220px;
     background: #1e293b;
     color: white;
     display: flex;
@@ -52,4 +52,19 @@
     flex: 1;
     background: #f1f5f9;
     padding: 2rem;
+}
+
+/* MEDIA QUERIES */
+@media screen and (max-width:1279px) {
+	.sidebar {
+        position: fixed;
+        top: 4rem;
+        left: 0;
+        height: 100vh;
+        transform: translateX(-100%);
+	}
+
+    .sidebar.visible {
+        transform: translateX(0);
+    }
 }
