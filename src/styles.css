@@ -1,8 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./app/shared/styles/auth.css";
+
+:root, :root.light {
+    --color_red: red;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+html, body {
+    font-family: Canva Sans, Noto Sans Variable, Noto Sans, -apple-system, BlinkMacSystemFont, Segoe UI, elvetica, Arial, sans-serif;
 }
 
 a {

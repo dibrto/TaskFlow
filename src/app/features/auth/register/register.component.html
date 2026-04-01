@@ -8,29 +8,62 @@
         <div class="auth-card">
             <h1>Register</h1>
 
-            <form (ngSubmit)="onRegister()">
+            <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
                 <div class="form-group">
-                    <input type="text" name="name" autocomplete="name" placeholder="" required />
-                    <label for="name">Name</label>
+                    <input type="text" name="username" autocomplete="username" placeholder="" formControlName="username" />
+                    <label for="username">Username</label>
+
+                    @if (registerForm.get("username")?.touched && registerForm.get("username")?.invalid) {
+                        <p class="error">Username is required!</p>
+                    }
                 </div>
 
                 <div class="form-group">
-                    <input type="email" name="email" autocomplete="email" placeholder="" required />
+                    <input type="email" name="email" autocomplete="email" formControlName="email" placeholder="" />
                     <label for="email">Email</label>
+
+                    @if (registerForm.get("email")?.touched && registerForm.get("email")?.invalid) {
+                        <p class="error">Email is not valid!</p>
+                    }
                 </div>
 
-                <div class="form-group">
-                    <input
-                        type="password"
-                        name="password"
-                        autocomplete="new-password"
-                        placeholder=""
-                        required
-                    />
-                    <label for="password">Password</label>
-                </div>
+                <ng-container formGroupName="passwords">
+                    <div class="form-group">
+                        <input type="password" name="password" autocomplete="new-password" formControlName="password" placeholder="" />
+                        <label for="password">Password</label>
 
-                <button class="btn-primary">Create Account</button>
+                        @if (passwordsGroup.get("password")?.touched && passwordsGroup.get("password")?.invalid) {
+                            @if (passwordsGroup.get("password")?.errors?.["required"]) {
+                                <p class="error">Password is required!</p>
+                            }
+                            @if (passwordsGroup.get("password")?.errors?.["minlength"]) {
+                                <p class="error">Password must be at least 5 characters long.</p>
+                            }
+                            @if (passwordsGroup.get("password")?.errors?.["maxlength"]) {
+                                <p class="error">Password can be max 64 characters long.</p>
+                            }
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" name="rePassword" autocomplete="rePassword" formControlName="rePassword" placeholder="" />
+                        <label for="rePassword">Repeat password</label>
+
+                        @if (passwordsGroup.get("rePassword")?.touched && passwordsGroup.get("rePassword")?.invalid) {
+                            <p class="error">Repeat password is required</p>
+                        }
+
+                        @if (
+                            passwordsGroup.get("password")?.dirty &&
+                            passwordsGroup.get("rePassword")?.dirty &&
+                            passwordsGroup.errors?.["passwordsMismatch"]
+                        ) {
+                            <p class="error">Passwords do not match!</p>
+                        }
+                    </div>
+                </ng-container>
+
+                <button class="btn-primary" [disabled]="registerForm.invalid">Create Account</button>
 
                 <p class="switch">
                     Already have an account?

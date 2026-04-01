@@ -9,7 +9,9 @@
             "@services/*": ["src/app/core/services/*"],
             "@features/*": ["src/app/features/*"],
             "@layout/*": ["src/app/layout/*"],
-            "@environments/*": ["src/app/environments/*"]
+            "@environments/*": ["src/app/environments/*"],
+            "@validators/*": ["src/app/shared/validators/*"],
+            "@styles/*": ["src/app/shared/styles/*"]
         },
         "types": []
     },

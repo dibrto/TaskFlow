@@ -1,18 +1,39 @@
 import { Component, inject } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { RouterLink } from "@angular/router";
 import { AuthService } from "@services/auth/auth.service";
+import passwordMatchValidator from "@validators/password-match.validator";
 
 @Component({
     selector: "app-register",
-    imports: [RouterLink, FormsModule],
+    imports: [RouterLink, ReactiveFormsModule],
     templateUrl: "./register.component.html",
     styleUrl: "./register.component.css",
 })
 export class RegisterComponent {
     private authService = inject(AuthService);
+    private fb = inject(FormBuilder);
+
+    registerForm: FormGroup = this.fb.group({
+        username: ["", [Validators.required]],
+        email: ["", [Validators.required, Validators.email]],
+        passwords: this.fb.group(
+            {
+                password: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(64)]],
+                rePassword: ["", [Validators.required]],
+            },
+            { validators: passwordMatchValidator },
+        ),
+    });
+
+    get passwordsGroup(): FormGroup {
+        return this.registerForm.get("passwords") as FormGroup;
+    }
 
     onRegister() {
+        const { username, email, passwords } = this.registerForm.value;
+        console.log(this.registerForm.value);
+
         this.authService.register();
     }
 }
