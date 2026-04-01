@@ -2,7 +2,14 @@
 @import "./app/shared/styles/auth.css";
 
 :root, :root.light {
+    --text_main: #444;
+    --text_second: var(--color_forms);
+
     --color_red: red;
+    --color_forms: #fdfdfd;
+    --color_blue_gray: #1f2a3c;
+    --color_main_bg: #f4f6f8;
+    --color_blue_main: #5b5ef7;
 }
 
 * {
@@ -18,4 +25,8 @@ html, body {
 a {
     text-decoration: none;
     color: #fdfdfd;
+}
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--color_forms) inset !important;
 }

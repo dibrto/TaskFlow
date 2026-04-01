@@ -5,8 +5,8 @@
 
 .auth-left {
     width: 35%;
-    background: #1f2a3c;
-    color: white;
+    background: var(--color_blue_gray);
+    color: var(--text_second);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,14 +25,14 @@
 
 .auth-right {
     flex: 1;
-    background: #f4f6f8;
+    background: var(--color_main_bg);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .auth-card {
-    background: white;
+    background: var(--color_forms);
     padding: 40px;
     border-radius: 10px;
     width: 350px;
@@ -40,7 +40,7 @@
 }
 
 .auth-card h1 {
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     font-size: 160%;
 }
 
@@ -66,7 +66,7 @@
     font-size: 14px;
     pointer-events: none;
     transition: 0.2s ease;
-    background: white;
+    background: var(--color_forms);
     padding: 0 4px;
 }
 
@@ -74,7 +74,7 @@
 .form-group input:not(:placeholder-shown) + label {
     top: -8px;
     font-size: 12px;
-    color: #5b5ef7;
+    color: var(--color_blue_main);
 }
 
 .form-group .error {
@@ -92,11 +92,12 @@
     padding: 12px;
     border: none;
     border-radius: 6px;
-    background: #5b5ef7;
-    color: white;
+    background: var(--color_blue_main);
+    color: var(--text_second);
     font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
+        transition: opacity 0.2s;
 }
 
 .btn-primary:disabled {
@@ -104,8 +105,9 @@
     opacity: 0.7;
 }
 
-.btn-primary:hover {
-    background: #4a4de0;
+.btn-primary:not(:disabled):hover {
+    /* background: var(--color_blue_second); */
+    opacity: .9;
 }
 
 .switch {
@@ -115,6 +117,11 @@
 }
 
 .switch a {
-    color: #5b5ef7;
+    color: var(--color_blue_main);
+    transition: opacity 0.2s;
     text-decoration: none;
+}
+
+.switch a:hover {    
+    opacity: .8;
 }
