@@ -31,9 +31,14 @@ export class RegisterComponent {
     }
 
     onRegister() {
-        const { username, email, passwords } = this.registerForm.value;
-        console.log(this.registerForm.value);
+        const formValue = this.registerForm.value;
 
-        this.authService.register();
+        const regData = {
+            username: formValue.username,
+            email: formValue.email,
+            password: formValue.passwords.password,
+        };
+
+        this.authService.register(regData);
     }
 }
