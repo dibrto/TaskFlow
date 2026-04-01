@@ -10,7 +10,7 @@
 
             <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
                 <div class="form-group">
-                    <input type="text" name="username" autocomplete="username" placeholder="" formControlName="username" />
+                    <input type="text" id="username" name="username" autocomplete="username" placeholder="" formControlName="username" />
                     <label for="username">Username</label>
 
                     @if (registerForm.get("username")?.touched && registerForm.get("username")?.invalid) {
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="email" name="email" autocomplete="email" formControlName="email" placeholder="" />
+                    <input type="email" id="email" name="email" autocomplete="email" formControlName="email" placeholder="" />
                     <label for="email">Email</label>
 
                     @if (registerForm.get("email")?.touched && registerForm.get("email")?.invalid) {
@@ -29,7 +29,7 @@
 
                 <ng-container formGroupName="passwords">
                     <div class="form-group">
-                        <input type="password" name="password" autocomplete="new-password" formControlName="password" placeholder="" />
+                        <input type="password" id="password" name="password" autocomplete="new-password" formControlName="password" placeholder="" />
                         <label for="password">Password</label>
 
                         @if (passwordsGroup.get("password")?.touched && passwordsGroup.get("password")?.invalid) {
@@ -46,7 +46,14 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="password" name="rePassword" autocomplete="rePassword" formControlName="rePassword" placeholder="" />
+                        <input
+                            type="password"
+                            id="rePassword"
+                            name="rePassword"
+                            autocomplete="new-password"
+                            formControlName="rePassword"
+                            placeholder=""
+                        />
                         <label for="rePassword">Repeat password</label>
 
                         @if (passwordsGroup.get("rePassword")?.touched && passwordsGroup.get("rePassword")?.invalid) {
