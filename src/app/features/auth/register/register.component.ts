@@ -2,6 +2,7 @@ import { Component, inject } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { RouterLink } from "@angular/router";
 import { AuthService } from "@services/auth/auth.service";
+import { AuthError } from "@supabase/supabase-js";
 import passwordMatchValidator from "@validators/password-match.validator";
 
 @Component({
@@ -39,6 +40,6 @@ export class RegisterComponent {
             password: formValue.passwords.password,
         };
 
-        this.authService.register(regData);
+        this.authService.register(regData).catch((err: AuthError) => console.log(err.message));
     }
 }

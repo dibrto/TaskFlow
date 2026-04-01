@@ -1,5 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { UserRegister } from "@interfaces/user";
+import { ApiService } from "@services/api/api.service";
 import { SupabaseService } from "@services/supabase/supabase.service";
 
 @Injectable({
@@ -7,6 +8,7 @@ import { SupabaseService } from "@services/supabase/supabase.service";
 })
 export class AuthService {
     private supabase = inject(SupabaseService);
+    private api = inject(ApiService);
 
     register({ email, password, username }: UserRegister) {
         const req = {
@@ -19,6 +21,6 @@ export class AuthService {
             },
         };
 
-        return this.supabase.client.auth.signUp(req);
+        return this.api.handleResponse(this.supabase.client.auth.signUp(req));
     }
 }
