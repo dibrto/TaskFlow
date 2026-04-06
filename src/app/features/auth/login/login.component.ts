@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthError } from "@supabase/supabase-js";
 import { ToastrService } from "ngx-toastr";
@@ -15,6 +15,7 @@ export class LoginComponent {
     private authService = inject(AuthService);
     private fb = inject(FormBuilder);
     private toast = inject(ToastrService);
+    private router = inject(Router);
 
     loginForm: FormGroup = this.fb.group({
         email: ["", [Validators.required, Validators.email]],
@@ -23,6 +24,9 @@ export class LoginComponent {
 
     onLogin() {
         const formValue = this.loginForm.value;
-        this.authService.login(formValue).catch((err: AuthError) => this.toast.error(err.message));
+        this.authService
+            .login(formValue)
+            .then(() => this.router.navigate(["/dashboard"]))
+            .catch((err: AuthError) => this.toast.error(err.message));
     }
 }
