@@ -19,12 +19,9 @@ export class AuthService {
         this.supabase.client.auth.onAuthStateChange((event, session) => {
             this.user.set(session?.user ?? null);
         });
-
-        // after refresh
-        this.loadInitialUser();
     }
 
-    private async loadInitialUser() {
+    async loadInitialUser() {
         const { data } = await this.supabase.client.auth.getSession();
         this.user.set(data.session?.user ?? null);
     }
