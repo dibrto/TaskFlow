@@ -1,5 +1,6 @@
-import { Component, signal } from "@angular/core";
+import { Component, inject, signal } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
+import { AuthService } from "./core/services/auth/auth.service";
 
 @Component({
     selector: "app-root",
@@ -8,5 +9,5 @@ import { RouterOutlet } from "@angular/router";
     styleUrl: "./app.component.css",
 })
 export class AppComponent {
-    protected readonly title = signal("taskflow");
+    private authService = inject(AuthService);
 }
