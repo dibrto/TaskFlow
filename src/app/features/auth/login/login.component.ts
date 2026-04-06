@@ -3,7 +3,7 @@ import { RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthError } from "@supabase/supabase-js";
 import { ToastrService } from "ngx-toastr";
-import { AuthService } from "../../../core/services/auth/auth.service";
+import { AuthService } from "@services/auth/auth.service";
 
 @Component({
     selector: "app-login",
