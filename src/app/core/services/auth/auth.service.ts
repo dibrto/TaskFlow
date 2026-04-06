@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { UserRegister } from "@interfaces/user";
+import { UserLogin, UserRegister } from "@interfaces/user";
 import { ApiService } from "@services/api/api.service";
 import { SupabaseService } from "@services/supabase/supabase.service";
 
@@ -22,5 +22,9 @@ export class AuthService {
         };
 
         return this.api.handleResponse(this.supabase.client.auth.signUp(req));
+    }
+
+    login(req: UserLogin) {
+        return this.api.handleResponse(this.supabase.client.auth.signInWithPassword(req));
     }
 }

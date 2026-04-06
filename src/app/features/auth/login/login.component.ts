@@ -1,10 +1,28 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { RouterLink } from "@angular/router";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { AuthError } from "@supabase/supabase-js";
+import { ToastrService } from "ngx-toastr";
+import { AuthService } from "../../../core/services/auth/auth.service";
 
 @Component({
     selector: "app-login",
-    imports: [RouterLink],
+    imports: [RouterLink, ReactiveFormsModule],
     templateUrl: "./login.component.html",
     styleUrl: "./login.component.css",
 })
-export class LoginComponent {}
+export class LoginComponent {
+    private authService = inject(AuthService);
+    private fb = inject(FormBuilder);
+    private toast = inject(ToastrService);
+
+    loginForm: FormGroup = this.fb.group({
+        email: ["", [Validators.required, Validators.email]],
+        password: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(64)]],
+    });
+
+    onLogin() {
+        const formValue = this.loginForm.value;
+        this.authService.login(formValue).catch((err: AuthError) => this.toast.error(err.message));
+    }
+}
