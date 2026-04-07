@@ -12,7 +12,7 @@ export class ApiService {
         const res = await promise;
 
         if (res?.error) throw res.error;
-        if (!res || !("data" in res)) throw new Error("Invalid response");
+        // if (!res || !("data" in res)) throw new Error("Invalid response");
 
         return res.data;
     }

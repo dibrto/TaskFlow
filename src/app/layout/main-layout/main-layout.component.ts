@@ -1,5 +1,8 @@
-import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
+import { Component, inject } from "@angular/core";
+import { Router, RouterOutlet } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import { AuthError } from "@supabase/supabase-js";
+import { AuthService } from "@services/auth/auth.service";
 
 @Component({
     selector: "app-main-layout",
@@ -7,4 +10,15 @@ import { RouterOutlet } from "@angular/router";
     templateUrl: "./main-layout.component.html",
     styleUrl: "./main-layout.component.css",
 })
-export class MainLayoutComponent {}
+export class MainLayoutComponent {
+    private authService = inject(AuthService);
+    private router = inject(Router);
+    private toast = inject(ToastrService);
+
+    onLogout() {
+        this.authService
+            .logout()
+            .then(() => this.router.navigate(["/"]))
+            .catch((err: AuthError) => this.toast.error(err.message));
+    }
+}

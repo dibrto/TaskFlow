@@ -43,4 +43,8 @@ export class AuthService {
     login(req: UserLogin) {
         return this.api.handleResponse(this.supabase.client.auth.signInWithPassword(req));
     }
+
+    logout() {
+        return this.api.handleResponse(this.supabase.client.auth.signOut());
+    }
 }
