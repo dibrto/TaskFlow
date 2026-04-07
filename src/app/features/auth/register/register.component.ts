@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { AuthError } from "@supabase/supabase-js";
 import { Toast, ToastrService } from "ngx-toastr";
 
@@ -17,6 +17,7 @@ export class RegisterComponent {
     private authService = inject(AuthService);
     private fb = inject(FormBuilder);
     private toast = inject(ToastrService);
+    private router = inject(Router);
 
     registerForm: FormGroup = this.fb.group({
         username: ["", [Validators.required]],
@@ -43,6 +44,14 @@ export class RegisterComponent {
             password: formValue.passwords.password,
         };
 
-        this.authService.register(regData).catch((err: AuthError) => this.toast.error(err.message));
+        this.authService
+            .register(regData)
+            .then(() => {
+                this.authService
+                    .login({ email: regData.email, password: regData.password })
+                    .then(() => this.router.navigate(["/dashboard"]))
+                    .catch((err: AuthError) => this.toast.error(err.message));
+            })
+            .catch((err: AuthError) => this.toast.error(err.message));
     }
 }
