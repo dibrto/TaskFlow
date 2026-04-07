@@ -18,7 +18,7 @@ export class MainLayoutComponent {
     onLogout() {
         this.authService
             .logout()
-            .then(() => this.router.navigate(["/"]))
+            .then(() => this.router.navigate(["/login"]))
             .catch((err: AuthError) => this.toast.error(err.message));
     }
 }

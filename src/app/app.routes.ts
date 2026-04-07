@@ -10,6 +10,8 @@ import { DashboardComponent } from "@features/dashboard/dashboard.component";
 import { BoardComponent } from "@features/board/board.component";
 
 export const routes: Routes = [
+    { path: "", redirectTo: "/dashboard", pathMatch: "full" },
+
     {
         path: "",
         component: MainLayoutComponent,
