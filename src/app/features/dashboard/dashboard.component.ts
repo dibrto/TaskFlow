@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from "@angular/core";
 import { Board } from "@interfaces/board";
 import { DashboardService } from "@services/dashboard/dashboard.service";
 import { CreateDashboardComponent } from "./create-dashboard/create-dashboard.component";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-dashboard",
@@ -11,6 +12,7 @@ import { CreateDashboardComponent } from "./create-dashboard/create-dashboard.co
 })
 export class DashboardComponent implements OnInit {
     private dashboardService = inject(DashboardService);
+    private router = inject(Router);
 
     boards: Board[] = [];
     isModalCreateBoard: boolean = false;
@@ -25,5 +27,9 @@ export class DashboardComponent implements OnInit {
 
     onCloseModal() {
         this.isModalCreateBoard = false;
+    }
+
+    onBoardClick(board: Board) {
+        this.router.navigate(["/board/" + board.id]);
     }
 }
