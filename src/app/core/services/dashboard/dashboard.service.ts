@@ -13,4 +13,8 @@ export class DashboardService {
     async getBoards(): Promise<Board[]> {
         return this.api.exec<Board[]>(() => this.supabase.client.from("boards").select("id, title, description"));
     }
+
+    async createBoard() {
+        console.log(111);
+    }
 }

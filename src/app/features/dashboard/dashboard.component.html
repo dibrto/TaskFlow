@@ -11,5 +11,9 @@
         </div>
     }
 
-    <div class="board-card add-card">Create new board</div>
+    <div class="board-card add-card" (click)="onOpenModal()">Create new board</div>
 </section>
+
+@if (isModalCreateBoard) {
+    <app-create-dashboard />
+}

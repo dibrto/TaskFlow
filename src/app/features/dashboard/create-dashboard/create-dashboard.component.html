@@ -1,0 +1,16 @@
+<div class="modal">
+    <div class="modal-content">
+        <form class="form-container" [formGroup]="createBoardForm" (ngSubmit)="onCreateBoard()">
+            <h1>Create board</h1>
+
+            <div class="form-group">
+                <input type="title" name="title" autocomplete="title" placeholder="" required formControlName="title" />
+                <label for="title">title</label>
+
+                @if (createBoardForm.get("title")?.touched && createBoardForm.get("title")?.invalid) {
+                    <p class="error">Title is required!</p>
+                }
+            </div>
+        </form>
+    </div>
+</div>

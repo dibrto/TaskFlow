@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'ngx-toastr/toastr';
+@import "ngx-toastr/toastr";
 @import "./app/shared/styles/auth.css";
+@import "./app/shared/styles/forms.css";
 
-:root, :root.light {
+:root,
+:root.light {
     --text_main: #444;
     --text_second: var(--color_forms);
 
@@ -19,8 +21,18 @@
     padding: 0;
 }
 
-html, body {
-    font-family: Canva Sans, Noto Sans Variable, Noto Sans, -apple-system, BlinkMacSystemFont, Segoe UI, elvetica, Arial, sans-serif;
+html,
+body {
+    font-family:
+        Canva Sans,
+        Noto Sans Variable,
+        Noto Sans,
+        -apple-system,
+        BlinkMacSystemFont,
+        Segoe UI,
+        elvetica,
+        Arial,
+        sans-serif;
 }
 
 a {
@@ -28,6 +40,9 @@ a {
     color: #fdfdfd;
 }
 
-input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px var(--color_forms) inset !important;
 }
