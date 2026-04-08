@@ -27,8 +27,10 @@
     cursor: pointer;
 }
 
-.nav-item:hover {
-    background: #334155;
+@media (hover: hover){
+    .nav-item:not(.active):hover {
+        background: #334155;
+    }
 }
 
 .active {

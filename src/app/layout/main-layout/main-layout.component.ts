@@ -1,12 +1,12 @@
 import { Component, inject } from "@angular/core";
-import { Router, RouterOutlet } from "@angular/router";
+import { Router, RouterOutlet, RouterLinkWithHref, RouterLinkActive } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { AuthError } from "@supabase/supabase-js";
 import { AuthService } from "@services/auth/auth.service";
 
 @Component({
     selector: "app-main-layout",
-    imports: [RouterOutlet],
+    imports: [RouterOutlet, RouterLinkWithHref, RouterLinkActive],
     templateUrl: "./main-layout.component.html",
     styleUrl: "./main-layout.component.css",
 })
