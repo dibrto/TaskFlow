@@ -15,5 +15,5 @@
 </section>
 
 @if (isModalCreateBoard) {
-    <app-create-dashboard />
+    <app-create-dashboard (close)="onCloseModal()" />
 }

@@ -19,6 +19,40 @@
     align-items: center;
 }
 
+.modal-content .close {
+    position: absolute;
+    top: 4px;
+    right: 11px;
+    filter: invert(1);
+    width: 32px;
+    cursor: pointer;
+}
+.close .m_line_1,
+.close .m_line_2 {
+    backface-visibility: hidden;
+    display: block;
+    height: 3px;
+    margin: 12.5px auto;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    width: 55%;
+    background-color: var(--color_main_bg);
+}
+.close .m_line_1 {
+    -moz-transform: rotate(-45deg) translate(-5px, 5px);
+    -o-transform: rotate(-45deg) translate(-5px, 5px);
+    -webkit-transform: rotate(-45deg) translate(-5px, 5px);
+    transform: rotate(-45deg) translate(-5px, 5px);
+}
+.close .m_line_2 {
+    -moz-transform: rotate(45deg) translate(-6px, -6px);
+    -o-transform: rotate(45deg) translate(-6px, -6px);
+    -webkit-transform: rotate(45deg) translate(-6px, -6px);
+    transform: rotate(45deg) translate(-6px, -6px);
+}
+
 .form-container {
     background: var(--color_forms);
     padding: 40px;

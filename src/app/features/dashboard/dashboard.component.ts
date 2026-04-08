@@ -26,8 +26,4 @@ export class DashboardComponent implements OnInit {
     onCloseModal() {
         this.isModalCreateBoard = false;
     }
-
-    async onCreateBoard() {
-        // console.log(await this.dashboardService.createBoard());
-    }
 }
