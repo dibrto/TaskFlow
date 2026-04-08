@@ -1,14 +1,13 @@
 <header class="topbar">
     <h1>Dashboard</h1>
-    <button class="create-btn">+ New Board</button>
 </header>
 
 <section class="boards">
-    @for (board of boards; track $index) {
+    @for (board of boards; track board.id) {
         <div class="board-card">
             <h3>{{ board.title }}</h3>
 
-            <p>{{ board.tasks }} tasks</p>
+            <p>{{ board.description }}</p>
         </div>
     }
 

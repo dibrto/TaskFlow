@@ -1,4 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
+import { Board } from "@interfaces/board";
+import { DashboardService } from "@services/dashboard/dashboard.service";
 
 @Component({
     selector: "app-dashboard",
@@ -6,11 +8,12 @@ import { Component } from "@angular/core";
     templateUrl: "./dashboard.component.html",
     styleUrl: "./dashboard.component.css",
 })
-export class DashboardComponent {
-    boards: any[] = [
-        { title: "Project Alpha", tasks: 12 },
-        { title: "Website Redesign", tasks: 8 },
-        { title: "Marketing Tasks", tasks: 5 },
-        { title: "Personal Tasks", tasks: 7 },
-    ];
+export class DashboardComponent implements OnInit {
+    private DashboardService = inject(DashboardService);
+
+    boards: Board[] = [];
+
+    async ngOnInit() {
+        this.boards = await this.DashboardService.getBoards();
+    }
 }
