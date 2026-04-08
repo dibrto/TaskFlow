@@ -3,6 +3,7 @@ import { UserLogin, UserRegister } from "@interfaces/user";
 import { User } from "@supabase/supabase-js";
 import { ApiService } from "@services/api/api.service";
 import { SupabaseService } from "@services/supabase/supabase.service";
+import { LoaderService } from "@services/loader/loader.service";
 
 @Injectable({
     providedIn: "root",
@@ -37,15 +38,15 @@ export class AuthService {
             },
         };
 
-        return this.api.handleResponse(this.supabase.client.auth.signUp(req));
+        return this.api.exec(() => this.supabase.client.auth.signUp(req));
     }
 
     login({ email, password }: UserLogin) {
         const req = { email, password };
-        return this.api.handleResponse(this.supabase.client.auth.signInWithPassword(req));
+        return this.api.exec(() => this.supabase.client.auth.signInWithPassword(req));
     }
 
     logout() {
-        return this.api.handleResponse(this.supabase.client.auth.signOut());
+        return this.api.exec(() => this.supabase.client.auth.signOut());
     }
 }

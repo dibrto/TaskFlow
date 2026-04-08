@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
+import { LoaderService } from "@services/loader/loader.service";
 
 @Injectable({
     providedIn: "root",
@@ -15,5 +16,19 @@ export class ApiService {
         // if (!res || !("data" in res)) throw new Error("Invalid response");
 
         return res.data;
+    }
+
+    loader = inject(LoaderService);
+    async withLoader<T>(fn: () => Promise<T>): Promise<T> {
+        this.loader.show();
+        try {
+            return await fn();
+        } finally {
+            this.loader.hide();
+        }
+    }
+
+    async exec<T>(fn: () => any): Promise<T> {
+        return this.withLoader(() => this.handleResponse<T>(fn()));
     }
 }
