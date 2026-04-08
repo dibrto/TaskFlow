@@ -15,10 +15,8 @@ export class MainLayoutComponent {
     private router = inject(Router);
     private toast = inject(ToastrService);
 
-    onLogout() {
-        this.authService
-            .logout()
-            .then(() => this.router.navigate(["/login"]))
-            .catch((err: AuthError) => this.toast.error(err.message));
+    async onLogout() {
+        await this.authService.logout();
+        this.router.navigate(["/login"]);
     }
 }

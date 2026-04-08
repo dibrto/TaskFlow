@@ -35,7 +35,7 @@ export class RegisterComponent {
         return this.registerForm.get("passwords") as FormGroup;
     }
 
-    onRegister() {
+    async onRegister() {
         const formValue = this.registerForm.value;
 
         const regData = {
@@ -44,14 +44,9 @@ export class RegisterComponent {
             password: formValue.passwords.password,
         };
 
-        this.authService
-            .register(regData)
-            .then(() => {
-                this.authService
-                    .login({ email: regData.email, password: regData.password })
-                    .then(() => this.router.navigate(["/dashboard"]))
-                    .catch((err: AuthError) => this.toast.error(err.message));
-            })
-            .catch((err: AuthError) => this.toast.error(err.message));
+        await this.authService.register(regData);
+
+        this.authService.login({ email: regData.email, password: regData.password });
+        await this.router.navigate(["/dashboard"]);
     }
 }

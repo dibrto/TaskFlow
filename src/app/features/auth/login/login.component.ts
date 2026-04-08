@@ -22,11 +22,10 @@ export class LoginComponent {
         password: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(64)]],
     });
 
-    onLogin() {
+    async onLogin() {
         const formValue = this.loginForm.value;
-        this.authService
-            .login(formValue)
-            .then(() => this.router.navigate(["/dashboard"]))
-            .catch((err: AuthError) => this.toast.error(err.message));
+
+        await this.authService.login(formValue);
+        this.router.navigate(["/dashboard"]);
     }
 }
