@@ -1,5 +1,8 @@
 import { Component, EventEmitter, inject, Output } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Board } from "@interfaces/board";
+import { DashboardService } from "@services/dashboard/dashboard.service";
 
 @Component({
     selector: "app-create-dashboard",
@@ -10,19 +13,21 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angula
 export class CreateDashboardComponent {
     @Output() close = new EventEmitter<void>();
 
-    onClose() {
-        this.close.emit();
-    }
-
     private fb = inject(FormBuilder);
+    private dashboardService = inject(DashboardService);
+    private router = inject(Router);
 
     createBoardForm: FormGroup = this.fb.group({
         title: ["", [Validators.required]],
         description: [""],
     });
 
-    onCreateBoard() {
-        console.log(111);
-        this.onClose();
+    onClose() {
+        this.close.emit();
+    }
+
+    async onCreateBoard() {
+        const newBoard = await this.dashboardService.createBoard(this.createBoardForm.value);
+        this.router.navigate(["/board/" + newBoard.id]);
     }
 }
