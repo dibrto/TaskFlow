@@ -4,48 +4,17 @@
     </div>
 
     <div class="board-columns">
-        <div class="board-col">
-            <h3>Tasks</h3>
+        @for (column of columns; track column.id) {
+            <div class="board-col">
+                <h3>{{ column.title }}</h3>
 
-            @for (task of newTasks; track $index) {
-                <div class="task-card">
-                    <h4>{{ task.title }}</h4>
-                    <p>{{ task.description }}</p>
-                </div>
-            }
-        </div>
-
-        <div class="board-col">
-            <h3>In process</h3>
-
-            @for (task of inProgressTasks; track $index) {
-                <div class="task-card">
-                    <h4>{{ task.title }}</h4>
-                    <p>{{ task.description }}</p>
-                </div>
-            }
-        </div>
-
-        <div class="board-col">
-            <h3>For testing</h3>
-
-            @for (task of testingTasks; track $index) {
-                <div class="task-card">
-                    <h4>{{ task.title }}</h4>
-                    <p>{{ task.description }}</p>
-                </div>
-            }
-        </div>
-
-        <div class="board-col">
-            <h3>Completed</h3>
-
-            @for (task of doneTasks; track $index) {
-                <div class="task-card">
-                    <h4>{{ task.title }}</h4>
-                    <p>{{ task.description }}</p>
-                </div>
-            }
-        </div>
+                @for (task of newTasks; track $index) {
+                    <div class="task-card">
+                        <h4>{{ task.title }}</h4>
+                        <p>{{ task.description }}</p>
+                    </div>
+                }
+            </div>
+        }
     </div>
 </div>

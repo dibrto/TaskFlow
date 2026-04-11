@@ -14,9 +14,16 @@ export interface BoardMember {
     role: string;
 }
 
+export interface BoardColumn {
+    id: string;
+    title: string;
+    position: number;
+}
+
 export interface BoardGet {
     id: string;
     title: string;
     description: string;
     board_members: BoardMember[];
+    board_columns: BoardColumn[];
 }

@@ -21,6 +21,10 @@ export class BoardService {
                     board_members (
                         user_id,
                         role
+                    ),
+                    board_columns(
+                        id,
+                        title
                     )`
                 )
                 .eq("id", id)
