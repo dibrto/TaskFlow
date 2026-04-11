@@ -20,10 +20,18 @@ export interface BoardColumn {
     position: number;
 }
 
+export interface BoardTasks {
+    id: string;
+    title: string;
+    description: string;
+    board_column_id: string;
+}
+
 export interface BoardGet {
     id: string;
     title: string;
     description: string;
     board_members: BoardMember[];
     board_columns: BoardColumn[];
+    board_tasks: BoardTasks[];
 }

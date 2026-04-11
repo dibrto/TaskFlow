@@ -25,6 +25,12 @@ export class BoardService {
                     board_columns(
                         id,
                         title
+                    ),
+                    board_tasks(
+                        id,
+                        title,
+                        description,
+                        board_column_id
                     )`
                 )
                 .eq("id", id)

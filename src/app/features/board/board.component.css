@@ -33,6 +33,11 @@
     flex: 1 1 auto;
 }
 
+.board-col {
+    min-width: 250px;
+    max-width: 250px;
+}
+
 .board-col h3 {
     font-size: 110%;
     margin-bottom: 8%;
@@ -46,8 +51,6 @@
     margin-bottom: 6%;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     transition: 0.2s;
-    min-width: 250px;
-    max-width: 250px;
 }
 
 .task-card:hover {
