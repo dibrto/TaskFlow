@@ -1,6 +1,7 @@
 .layout {
     display: flex;
     height: 100vh;
+    overflow-y: hidden;
 }
 
 /* SIDEBAR */
@@ -27,7 +28,7 @@
     cursor: pointer;
 }
 
-@media (hover: hover){
+@media (hover: hover) {
     .nav-item:not(.active):hover {
         background: #334155;
     }
@@ -56,16 +57,16 @@
 }
 
 /* MEDIA QUERIES */
-@media screen and (max-width:1279px) {
-	.sidebar {
+/* @media screen and (max-width: 1279px) {
+    .sidebar {
         position: fixed;
         top: 4rem;
         left: 0;
         height: 100vh;
         transform: translateX(-100%);
-	}
+    }
 
     .sidebar.visible {
         transform: translateX(0);
     }
-}
+} */
