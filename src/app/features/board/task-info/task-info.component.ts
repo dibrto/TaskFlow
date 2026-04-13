@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, OnChanges, Output } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Board, BoardTask } from "@interfaces/board";
 import { TaskService } from "@services/task/task.service";
@@ -9,12 +9,14 @@ import { TaskService } from "@services/task/task.service";
     templateUrl: "./task-info.component.html",
     styleUrl: "./task-info.component.css"
 })
-export class TaskInfoComponent {
+export class TaskInfoComponent implements OnChanges {
     @Output() close = new EventEmitter<void>();
 
     @Input() boardId: string | null = null;
     @Input() columnId: string | null = null;
     @Output() created = new EventEmitter<BoardTask>();
+
+    @Input() taskInfo: BoardTask | null = null;
 
     private fb = inject(FormBuilder);
     private taskService = inject(TaskService);
@@ -24,11 +26,21 @@ export class TaskInfoComponent {
         description: [""]
     });
 
+    get isTaskInfo() {
+        return !!this.taskInfo;
+    }
+
+    ngOnChanges() {
+        if (this.taskInfo) {
+            this.taskForm.patchValue(this.taskInfo);
+        }
+    }
+
     onClose() {
         this.close.emit();
     }
 
-    async onSave() {
+    async onCreate() {
         const data = this.taskForm.value;
         const req = {
             ...data,
@@ -37,6 +49,11 @@ export class TaskInfoComponent {
         };
         const newTask = await this.taskService.createTask(req);
         this.created.emit(newTask);
+        this.onClose();
+    }
+
+    async onEdit() {
+        console.log(111);
         this.onClose();
     }
 }

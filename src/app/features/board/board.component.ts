@@ -20,8 +20,9 @@ export class BoardComponent implements OnInit {
     columns: BoardColumn[] = [];
     tasks: Record<string, BoardTask[]> = {};
 
-    isCreateTask: boolean = false;
+    isTaskInfo: boolean = false;
     columnId: string | null = null;
+    taskInfo: BoardTask | null = null;
 
     async ngOnInit(): Promise<void> {
         this.boardId = this.route.snapshot.params["id"];
@@ -41,15 +42,21 @@ export class BoardComponent implements OnInit {
     }
 
     onOpenCreateTask(columnId: string) {
-        this.isCreateTask = true;
+        this.isTaskInfo = true;
         this.columnId = columnId;
     }
-
-    onCloseCreateTask() {
-        this.isCreateTask = false;
-    }
-
     onTaskCreated(task: BoardTask) {
         this.tasks[task.board_column_id].unshift(task);
+    }
+
+    onOpenTaskInfo(task: BoardTask) {
+        this.isTaskInfo = true;
+        this.taskInfo = task;
+    }
+
+    onCloseTaskInfo() {
+        this.isTaskInfo = false;
+        this.columnId = null;
+        this.taskInfo = null;
     }
 }

@@ -9,7 +9,7 @@
                 <h3>{{ column.title }}</h3>
 
                 @for (task of tasks[column.id]; track task.id) {
-                    <div class="task-card">
+                    <div class="task-card" (click)="onOpenTaskInfo(task)">
                         <h4>{{ task.title }}</h4>
                         <!-- <p>{{ task.description }}</p> -->
                     </div>
@@ -22,12 +22,13 @@
         }
     </div>
 
-    @if (isCreateTask) {
+    @if (isTaskInfo) {
         <app-task-info
             [boardId]="board?.id ?? null"
             [columnId]="this.columnId"
+            [taskInfo]="this.taskInfo"
             (created)="onTaskCreated($event)"
-            (close)="onCloseCreateTask()"
+            (close)="onCloseTaskInfo()"
         />
     }
 </div>

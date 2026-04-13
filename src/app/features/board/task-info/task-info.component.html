@@ -1,6 +1,6 @@
 <div class="modal">
     <div class="modal-content">
-        <form class="form-container" [formGroup]="taskForm" (ngSubmit)="onSave()">
+        <form class="form-container" [formGroup]="taskForm" (ngSubmit)="!isTaskInfo ? onCreate() : onEdit()">
             <h1>Task</h1>
 
             <div class="close" (click)="onClose()">
