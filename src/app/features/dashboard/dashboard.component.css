@@ -23,6 +23,7 @@
 }
 
 .board-card {
+    height: 90px;
     background: white;
     border-radius: 10px;
     padding: 20px;
@@ -31,7 +32,7 @@
     user-select: none;
 }
 
-@media (hover: hover){
+@media (hover: hover) {
     .board-card:hover {
         transform: translateY(-3px);
     }
