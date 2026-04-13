@@ -7,6 +7,9 @@
     background-color: var(--color_main_bg);
     border-radius: 15px;
     max-height: 90vh;
+    width: 100%;
+    max-width: 350px;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -57,7 +60,6 @@
     background: var(--color_forms);
     padding: 40px;
     border-radius: 10px;
-    width: 350px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -78,6 +80,14 @@
     border-radius: 6px;
     font-size: 14px;
     outline: none;
+}
+
+.form-group textarea {
+    width: -webkit-fill-available;
+    width: -moz-available;
+    height: 15rem;
+    resize: none;
+    border-radius: 5px;
 }
 
 .form-group label {

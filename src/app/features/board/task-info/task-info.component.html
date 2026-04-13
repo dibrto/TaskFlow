@@ -1,0 +1,28 @@
+<div class="modal">
+    <div class="modal-content">
+        <form class="form-container" [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
+            <h1>Task</h1>
+
+            <div class="close" (click)="onClose()">
+                <div class="m_line_1"></div>
+                <div class="m_line_2"></div>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="title" placeholder="" formControlName="title" />
+                <label for="title">Title</label>
+
+                @if (taskForm.get("title")?.touched && taskForm.get("title")?.invalid) {
+                    <p class="error">Title is required!</p>
+                }
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="description" placeholder="" formControlName="description" />
+                <label for="description">Description</label>
+            </div>
+
+            <button class="btn-primary" [disabled]="taskForm.invalid">Save</button>
+        </form>
+    </div>
+</div>

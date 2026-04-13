@@ -11,14 +11,18 @@
                 @for (task of tasks[column.id]; track task.id) {
                     <div class="task-card">
                         <h4>{{ task.title }}</h4>
-                        <p>{{ task.description }}</p>
+                        <!-- <p>{{ task.description }}</p> -->
                     </div>
                 }
 
-                <div class="task-card add-card">
+                <div class="add-card" (click)="onOpenCreateTask()">
                     <h4>Create new task</h4>
                 </div>
             </div>
         }
     </div>
+
+    @if (isCreateTask) {
+        <app-task-info (close)="onCloseCreateTask()" />
+    }
 </div>

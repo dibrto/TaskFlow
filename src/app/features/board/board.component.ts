@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Board, BoardColumn, BoardMember, BoardTasks } from "@interfaces/board";
 import { BoardService } from "@services/board/board.service";
+import { TaskInfoComponent } from "./task-info/task-info.component";
 
 @Component({
     selector: "app-board",
-    imports: [],
+    imports: [TaskInfoComponent],
     templateUrl: "./board.component.html",
     styleUrl: "./board.component.css"
 })
@@ -18,6 +19,8 @@ export class BoardComponent implements OnInit {
     members: BoardMember[] = [];
     columns: BoardColumn[] = [];
     tasks: Record<string, BoardTasks[]> = {};
+
+    isCreateTask: boolean = false;
 
     async ngOnInit(): Promise<void> {
         this.boardId = this.route.snapshot.params["id"];
@@ -36,14 +39,11 @@ export class BoardComponent implements OnInit {
         }
     }
 
-    newTasks: any[] = [
-        { title: "Login UI", description: "Create login page" },
-        { title: "API Setup", description: "Setup backend auth" }
-    ];
+    onOpenCreateTask() {
+        this.isCreateTask = true;
+    }
 
-    inProgressTasks: any[] = [{ title: "Dashboard", description: "Build main dashboard" }];
-
-    testingTasks: any[] = [{ title: "Bug Fix", description: "Fix login validation" }];
-
-    doneTasks: any[] = [{ title: "Project Setup", description: "Initial setup done" }];
+    onCloseCreateTask() {
+        this.isCreateTask = false;
+    }
 }
