@@ -23,6 +23,11 @@
     </div>
 
     @if (isCreateTask) {
-        <app-task-info [boardId]="board?.id ?? null" [columnId]="this.columnId" (close)="onCloseCreateTask()" />
+        <app-task-info
+            [boardId]="board?.id ?? null"
+            [columnId]="this.columnId"
+            (created)="onTaskCreated($event)"
+            (close)="onCloseCreateTask()"
+        />
     }
 </div>

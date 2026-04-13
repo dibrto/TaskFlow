@@ -48,4 +48,8 @@ export class BoardComponent implements OnInit {
     onCloseCreateTask() {
         this.isCreateTask = false;
     }
+
+    onTaskCreated(task: BoardTask) {
+        this.tasks[task.board_column_id].unshift(task);
+    }
 }

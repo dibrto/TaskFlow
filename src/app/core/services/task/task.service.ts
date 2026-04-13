@@ -15,7 +15,7 @@ export class TaskService {
             this.supabase.client
                 .from("board_tasks")
                 .insert({ ...req })
-                .select()
+                .select("id, title, description, board_column_id")
                 .single()
         );
     }

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { Board } from "@interfaces/board";
+import { Board, BoardTask } from "@interfaces/board";
 import { TaskService } from "@services/task/task.service";
 
 @Component({
@@ -11,8 +11,10 @@ import { TaskService } from "@services/task/task.service";
 })
 export class TaskInfoComponent {
     @Output() close = new EventEmitter<void>();
+
     @Input() boardId: string | null = null;
     @Input() columnId: string | null = null;
+    @Output() created = new EventEmitter<BoardTask>();
 
     private fb = inject(FormBuilder);
     private taskService = inject(TaskService);
@@ -34,6 +36,7 @@ export class TaskInfoComponent {
             board_column_id: this.columnId
         };
         const newTask = await this.taskService.createTask(req);
-        console.log(newTask);
+        this.created.emit(newTask);
+        this.onClose();
     }
 }
