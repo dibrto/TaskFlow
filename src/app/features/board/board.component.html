@@ -28,6 +28,7 @@
             [columnId]="this.columnId"
             [taskInfo]="this.taskInfo"
             (created)="onTaskCreated($event)"
+            (edited)="onTaskEdited($event)"
             (close)="onCloseTaskInfo()"
         />
     }

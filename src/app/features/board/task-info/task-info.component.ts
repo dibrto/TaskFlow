@@ -17,6 +17,7 @@ export class TaskInfoComponent implements OnChanges {
     @Output() created = new EventEmitter<BoardTask>();
 
     @Input() taskInfo: BoardTask | null = null;
+    @Output() edited = new EventEmitter<BoardTask>();
 
     private fb = inject(FormBuilder);
     private taskService = inject(TaskService);
@@ -53,7 +54,10 @@ export class TaskInfoComponent implements OnChanges {
     }
 
     async onEdit() {
-        console.log(111);
+        const data = this.taskForm.value;
+        const id = this.taskInfo?.id ?? "";
+        const updTask = await this.taskService.editTask(id, data);
+        this.edited.emit(updTask);
         this.onClose();
     }
 }

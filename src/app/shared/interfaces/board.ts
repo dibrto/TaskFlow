@@ -34,6 +34,11 @@ export interface BoardTaskCreate {
     description: string;
 }
 
+export interface BoardTaskEdit {
+    title: string;
+    description: string;
+}
+
 export interface BoardGet {
     id: string;
     title: string;

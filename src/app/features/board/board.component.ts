@@ -53,6 +53,15 @@ export class BoardComponent implements OnInit {
         this.isTaskInfo = true;
         this.taskInfo = task;
     }
+    onTaskEdited(updatedTask: BoardTask) {
+        const list = this.tasks[updatedTask.board_column_id];
+
+        const index = list.findIndex(t => t.id === updatedTask.id);
+
+        if (index !== -1) {
+            list[index] = updatedTask;
+        }
+    }
 
     onCloseTaskInfo() {
         this.isTaskInfo = false;
