@@ -15,7 +15,7 @@
                     </div>
                 }
 
-                <div class="add-card" (click)="onOpenCreateTask()">
+                <div class="add-card" (click)="onOpenCreateTask(column.id)">
                     <h4>Create new task</h4>
                 </div>
             </div>
@@ -23,6 +23,6 @@
     </div>
 
     @if (isCreateTask) {
-        <app-task-info (close)="onCloseCreateTask()" />
+        <app-task-info [boardId]="board?.id ?? null" [columnId]="this.columnId" (close)="onCloseCreateTask()" />
     }
 </div>

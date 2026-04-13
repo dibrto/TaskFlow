@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Board, BoardColumn, BoardMember, BoardTasks } from "@interfaces/board";
+import { Board, BoardColumn, BoardMember, BoardTask } from "@interfaces/board";
 import { BoardService } from "@services/board/board.service";
 import { TaskInfoComponent } from "./task-info/task-info.component";
 
@@ -18,9 +18,10 @@ export class BoardComponent implements OnInit {
     board: Board | null = null;
     members: BoardMember[] = [];
     columns: BoardColumn[] = [];
-    tasks: Record<string, BoardTasks[]> = {};
+    tasks: Record<string, BoardTask[]> = {};
 
     isCreateTask: boolean = false;
+    columnId: string | null = null;
 
     async ngOnInit(): Promise<void> {
         this.boardId = this.route.snapshot.params["id"];
@@ -39,8 +40,9 @@ export class BoardComponent implements OnInit {
         }
     }
 
-    onOpenCreateTask() {
+    onOpenCreateTask(columnId: string) {
         this.isCreateTask = true;
+        this.columnId = columnId;
     }
 
     onCloseCreateTask() {
