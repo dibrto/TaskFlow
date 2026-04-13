@@ -63,6 +63,11 @@ export class BoardComponent implements OnInit {
         }
     }
 
+    onTaskDelete(delTask: BoardTask) {
+        const tasks = this.tasks[delTask.board_column_id].filter(t => t.id !== delTask.id);
+        this.tasks[delTask.board_column_id] = tasks;
+    }
+
     onCloseTaskInfo() {
         this.isTaskInfo = false;
         this.columnId = null;

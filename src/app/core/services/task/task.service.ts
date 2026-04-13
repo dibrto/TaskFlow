@@ -30,4 +30,15 @@ export class TaskService {
                 .single()
         );
     }
+
+    async deleteTask(taskId: string): Promise<BoardTask> {
+        return this.api.exec(() =>
+            this.supabase.client
+                .from("board_tasks")
+                .delete()
+                .eq("id", taskId)
+                .select("id, title, description, board_column_id")
+                .maybeSingle()
+        );
+    }
 }

@@ -29,6 +29,7 @@
             [taskInfo]="this.taskInfo"
             (created)="onTaskCreated($event)"
             (edited)="onTaskEdited($event)"
+            (deleted)="onTaskDelete($event)"
             (close)="onCloseTaskInfo()"
         />
     }

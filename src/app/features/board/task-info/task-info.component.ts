@@ -18,6 +18,7 @@ export class TaskInfoComponent implements OnChanges {
 
     @Input() taskInfo: BoardTask | null = null;
     @Output() edited = new EventEmitter<BoardTask>();
+    @Output() deleted = new EventEmitter<BoardTask>();
 
     private fb = inject(FormBuilder);
     private taskService = inject(TaskService);
@@ -58,6 +59,13 @@ export class TaskInfoComponent implements OnChanges {
         const id = this.taskInfo?.id ?? "";
         const updTask = await this.taskService.editTask(id, data);
         this.edited.emit(updTask);
+        this.onClose();
+    }
+
+    async onDelete() {
+        const id = this.taskInfo?.id ?? "";
+        const delTask = await this.taskService.deleteTask(id);
+        this.deleted.emit(delTask);
         this.onClose();
     }
 }

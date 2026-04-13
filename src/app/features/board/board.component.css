@@ -49,6 +49,7 @@
     -webkit-user-select: none;
     user-select: none;
     transition: 0.2s;
+    overflow-wrap: break-word;
 }
 
 .add-card {
