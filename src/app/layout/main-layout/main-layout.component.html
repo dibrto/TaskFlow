@@ -5,7 +5,9 @@
         <nav>
             <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">Dashboard</a>
             <a class="nav-item">My Boards</a>
-            <a class="nav-item">Profile</a>
+            @for (board of boards$ | async; track board.id) {
+                <a class="nav-item">{{ board.title }}</a>
+            }
         </nav>
 
         <button type="button" class="logout" (click)="onLogout()">Logout</button>

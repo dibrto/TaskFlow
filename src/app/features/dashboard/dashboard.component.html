@@ -3,7 +3,7 @@
 </header>
 
 <section class="boards">
-    @for (board of boards; track board.id) {
+    @for (board of boards$ | async; track board.id) {
         <div class="board-card" (click)="onBoardClick(board)">
             <h3>{{ board.title }}</h3>
 
