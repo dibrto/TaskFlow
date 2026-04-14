@@ -16,9 +16,14 @@ export class MainLayoutComponent implements OnInit {
     private router = inject(Router);
 
     boards$ = this.boardService.boards$;
+    showBoards: boolean = true;
 
     ngOnInit(): void {
         this.boardService.loadBoards();
+    }
+
+    onToggleShowBoards() {
+        this.showBoards = !this.showBoards;
     }
 
     async onLogout() {

@@ -20,6 +20,19 @@
     text-align: center;
 }
 
+.sidebar-section {
+    margin-top: 20px;
+}
+
+.section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #8a94a6;
+    margin-bottom: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
 .nav-item {
     display: block;
     padding: 10px;
