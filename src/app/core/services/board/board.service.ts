@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { Board, BoardGet } from "@interfaces/board";
+import { Board, BoardCreate, BoardGet } from "@interfaces/board";
 import { ApiService } from "@services/api/api.service";
 import { SupabaseService } from "@services/supabase/supabase.service";
 import { BehaviorSubject } from "rxjs";
@@ -22,6 +22,21 @@ export class BoardService {
         if (this.boardsSubject.value.length) return;
 
         this.boardsSubject.next(await this.getBoards());
+    }
+
+    async createBoard(req: BoardCreate): Promise<Board> {
+        const newBoard = await this.api.exec<Board>(() =>
+            this.supabase.client
+                .from("boards")
+                .insert({ ...req })
+                .select("id, title, description")
+                .single()
+        );
+
+        const current = this.boardsSubject.value;
+        this.boardsSubject.next([...current, newBoard]);
+
+        return newBoard;
     }
 
     async getBoard(id: string): Promise<BoardGet> {

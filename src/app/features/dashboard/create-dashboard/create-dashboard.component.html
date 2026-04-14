@@ -1,28 +1,26 @@
 <div class="modal">
-    <div class="modal-content">
-        <form class="form-container" [formGroup]="createBoardForm" (ngSubmit)="onCreateBoard()">
-            <h1>Create board</h1>
+    <form class="form-container modal-content" [formGroup]="createBoardForm" (ngSubmit)="onCreateBoard()">
+        <h1>Create board</h1>
 
-            <div class="close" (click)="onClose()">
-                <div class="m_line_1"></div>
-                <div class="m_line_2"></div>
-            </div>
+        <div class="close" (click)="onClose()">
+            <div class="m_line_1"></div>
+            <div class="m_line_2"></div>
+        </div>
 
-            <div class="form-group">
-                <input type="text" id="title" placeholder="" formControlName="title" />
-                <label for="title">Title</label>
+        <div class="form-group">
+            <input type="text" id="title" placeholder="" formControlName="title" />
+            <label for="title">Title</label>
 
-                @if (createBoardForm.get("title")?.touched && createBoardForm.get("title")?.invalid) {
-                    <p class="error">Title is required!</p>
-                }
-            </div>
+            @if (createBoardForm.get("title")?.touched && createBoardForm.get("title")?.invalid) {
+                <p class="error">Title is required!</p>
+            }
+        </div>
 
-            <div class="form-group">
-                <input type="text" id="description" placeholder="" formControlName="description" />
-                <label for="description">Description</label>
-            </div>
+        <div class="form-group">
+            <input type="text" id="description" placeholder="" formControlName="description" />
+            <label for="description">Description</label>
+        </div>
 
-            <button class="btn-primary" [disabled]="createBoardForm.invalid">Create</button>
-        </form>
-    </div>
+        <button class="btn-primary" [disabled]="createBoardForm.invalid">Create</button>
+    </form>
 </div>
