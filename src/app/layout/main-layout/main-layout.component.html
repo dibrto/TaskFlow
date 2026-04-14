@@ -6,7 +6,7 @@
             <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">Dashboard</a>
             <a class="nav-item">My Boards</a>
             @for (board of boards$ | async; track board.id) {
-                <a class="nav-item">{{ board.title }}</a>
+                <a [routerLink]="['/board', board.id]" routerLinkActive="active" class="nav-item">{{ board.title }}</a>
             }
         </nav>
 

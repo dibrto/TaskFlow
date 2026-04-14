@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Board, BoardColumn, BoardMember, BoardTask } from "@interfaces/board";
 import { BoardService } from "@services/board/board.service";
 import { TaskInfoComponent } from "./task-info/task-info.component";
+import { switchMap } from "rxjs";
 
 @Component({
     selector: "app-board",
@@ -24,21 +25,29 @@ export class BoardComponent implements OnInit {
     columnId: string | null = null;
     taskInfo: BoardTask | null = null;
 
-    async ngOnInit(): Promise<void> {
-        this.boardId = this.route.snapshot.params["id"];
-        const { board_columns, board_tasks, board_members, ...board } = await this.boardService.getBoard(this.boardId);
+    ngOnInit(): void {
+        this.route.params
+            .pipe(
+                switchMap(params => {
+                    return this.boardService.getBoard(params["id"]);
+                })
+            )
+            .subscribe(data => {
+                const { board_columns, board_tasks, board_members, ...board } = data;
 
-        this.board = board;
-        this.members = board_members;
-        this.columns = board_columns;
+                this.board = board;
+                this.members = board_members;
+                this.columns = board_columns;
 
-        for (const task of board_tasks) {
-            if (!this.tasks[task.board_column_id]) {
-                this.tasks[task.board_column_id] = [];
-            }
+                this.tasks = {};
 
-            this.tasks[task.board_column_id].push(task);
-        }
+                for (const task of board_tasks) {
+                    if (!this.tasks[task.board_column_id]) {
+                        this.tasks[task.board_column_id] = [];
+                    }
+                    this.tasks[task.board_column_id].push(task);
+                }
+            });
     }
 
     onOpenCreateTask(columnId: string) {
