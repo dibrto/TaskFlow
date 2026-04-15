@@ -5,35 +5,37 @@
 
     <div class="board-columns">
         @for (column of columns; track column.id) {
-            <div
-                class="board-col"
-                cdkDropList
-                [id]="'col-' + column.id"
-                [cdkDropListConnectedTo]="connectedLists"
-                [cdkDropListData]="tasks[column.id]"
-                (cdkDropListDropped)="drop($event)"
-            >
+            <div class="board-col">
                 <h3>{{ column.title }}</h3>
 
-                @for (task of tasks[column.id]; track task.id) {
-                    <div class="task-card-wrapper" cdkDrag>
-                        <div class="task-card" [matMenuTriggerFor]="menu">
-                            <mat-icon fontSet="material-symbols-outlined" class="edit-icon">edit_square</mat-icon>
-                            <h4>{{ task.title }}</h4>
-                            <!-- <p>{{ task.description }}</p> -->
+                <div
+                    class="tasks"
+                    cdkDropList
+                    [id]="'col-' + column.id"
+                    [cdkDropListConnectedTo]="connectedLists"
+                    [cdkDropListData]="tasks[column.id]"
+                    (cdkDropListDropped)="drop($event)"
+                >
+                    @for (task of tasks[column.id]; track task.id) {
+                        <div class="task-card-wrapper" cdkDrag>
+                            <div class="task-card" [matMenuTriggerFor]="menu">
+                                <mat-icon fontSet="material-symbols-outlined" class="edit-icon">edit_square</mat-icon>
+                                <h4>{{ task.title }}</h4>
+                                <!-- <p>{{ task.description }}</p> -->
+                            </div>
                         </div>
-                    </div>
-                    <mat-menu #menu="matMenu" class="custom-menu" xPosition="before" overlapTrigger>
-                        <button mat-menu-item (click)="onOpenTaskInfo(task)">
-                            <mat-icon>view_kanban</mat-icon>
-                            <span>Open task</span>
-                        </button>
-                        <button mat-menu-item (click)="onTaskDelete(task)">
-                            <mat-icon>delete</mat-icon>
-                            <span>Delete task</span>
-                        </button>
-                    </mat-menu>
-                }
+                        <mat-menu #menu="matMenu" class="custom-menu" xPosition="before" overlapTrigger>
+                            <button mat-menu-item (click)="onOpenTaskInfo(task)">
+                                <mat-icon>view_kanban</mat-icon>
+                                <span>Open task</span>
+                            </button>
+                            <button mat-menu-item (click)="onTaskDelete(task)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete task</span>
+                            </button>
+                        </mat-menu>
+                    }
+                </div>
 
                 <div class="add-card" (click)="onOpenCreateTask(column.id)">
                     <h4>Create new task</h4>
