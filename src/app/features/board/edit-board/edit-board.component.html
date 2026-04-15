@@ -1,0 +1,26 @@
+<div class="modal">
+    <form class="form-container modal-content" [formGroup]="boardForm" (ngSubmit)="onEdit()">
+        <h1>Board</h1>
+
+        <div class="close" (click)="this.close.emit()">
+            <div class="m_line_1"></div>
+            <div class="m_line_2"></div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="title" placeholder="" formControlName="title" />
+            <label for="title">Title</label>
+
+            @if (boardForm.get("title")?.touched && boardForm.get("title")?.invalid) {
+                <p class="error">Title is required!</p>
+            }
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="description" placeholder="" formControlName="description" />
+            <label for="description">Description</label>
+        </div>
+
+        <button class="btn-primary" [disabled]="boardForm.invalid">Save</button>
+    </form>
+</div>

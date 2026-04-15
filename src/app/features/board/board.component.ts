@@ -10,9 +10,10 @@ import { BoardService } from "@services/board/board.service";
 import { TaskInfoComponent } from "./task-info/task-info.component";
 import { TaskService } from "@services/task/task.service";
 import getNewPosition from "@utils/position.helper";
+import { EditBoardComponent } from "./edit-board/edit-board.component";
 @Component({
     selector: "app-board",
-    imports: [TaskInfoComponent, MatMenuModule, MatIconModule, DragDropModule],
+    imports: [TaskInfoComponent, MatMenuModule, MatIconModule, DragDropModule, EditBoardComponent],
     templateUrl: "./board.component.html",
     styleUrl: "./board.component.css"
 })
@@ -20,6 +21,8 @@ export class BoardComponent implements OnInit {
     private route = inject(ActivatedRoute);
     private boardService = inject(BoardService);
     private taskService = inject(TaskService);
+
+    isEditBoard: boolean = false;
 
     connectedLists: string[] = [];
 
@@ -55,6 +58,13 @@ export class BoardComponent implements OnInit {
                     this.tasks[task.board_column_id].push(task);
                 }
             });
+    }
+
+    onToggleEditBoard(): void {
+        this.isEditBoard = !this.isEditBoard;
+    }
+    onBoardEdited(updBoard: Board) {
+        this.board = updBoard;
     }
 
     async drop(event: CdkDragDrop<BoardTask[]>) {

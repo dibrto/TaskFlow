@@ -15,7 +15,9 @@ export class BoardService {
     boards$ = this.boardsSubject.asObservable();
 
     async getBoards(): Promise<Board[]> {
-        return this.api.exec<Board[]>(() => this.supabase.client.from("boards").select("id, title, description"));
+        return this.api.exec<Board[]>(() =>
+            this.supabase.client.from("boards").select("id, title, description").order("created_at")
+        );
     }
 
     async loadBoards(): Promise<void> {
@@ -68,5 +70,22 @@ export class BoardService {
                 .order("position", { referencedTable: "board_tasks", ascending: false })
                 .single()
         );
+    }
+
+    async editBoard({ id, ...req }: Board): Promise<Board> {
+        const updBoard = await this.api.exec<Board>(() =>
+            this.supabase.client
+                .from("boards")
+                .update({ ...req })
+                .eq("id", id)
+                .select("id, title, description")
+                .single()
+        );
+
+        const current = this.boardsSubject.value;
+        const updated = current.map(b => (b.id === updBoard.id ? updBoard : b));
+        this.boardsSubject.next(updated);
+
+        return updBoard;
     }
 }

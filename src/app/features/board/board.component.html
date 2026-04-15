@@ -1,6 +1,7 @@
 <div class="board-page">
     <div class="board-header">
         <h2>{{ board?.title }}</h2>
+        <mat-icon (click)="onToggleEditBoard()">edit_note</mat-icon>
     </div>
 
     <div class="board-columns">
@@ -53,5 +54,9 @@
             (edited)="onTaskEdited($event)"
             (close)="onCloseTaskInfo()"
         />
+    }
+
+    @if (isEditBoard) {
+        <app-edit-board [boardInfo]="board" (close)="onToggleEditBoard()" (edited)="onBoardEdited($event)" />
     }
 </div>

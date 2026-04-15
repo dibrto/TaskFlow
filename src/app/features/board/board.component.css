@@ -6,10 +6,17 @@
 }
 
 .board-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex: 0 0 auto;
+    display: flex;
+    align-items: end;
+    gap: 0.5rem;
+}
+
+.board-header .mat-icon {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }
 
 .board-header h2 {
