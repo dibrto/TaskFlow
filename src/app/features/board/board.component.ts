@@ -1,13 +1,15 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatIconModule } from "@angular/material/icon";
+import { switchMap } from "rxjs";
+
 import { Board, BoardColumn, BoardMember, BoardTask } from "@interfaces/board";
 import { BoardService } from "@services/board/board.service";
 import { TaskInfoComponent } from "./task-info/task-info.component";
-import { switchMap } from "rxjs";
-
 @Component({
     selector: "app-board",
-    imports: [TaskInfoComponent],
+    imports: [TaskInfoComponent, MatMenuModule, MatIconModule],
     templateUrl: "./board.component.html",
     styleUrl: "./board.component.css"
 })

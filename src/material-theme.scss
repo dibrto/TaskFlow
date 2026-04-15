@@ -36,3 +36,13 @@ body {
   // margin: 0;
   // height: 100%;
 }
+
+.mat-mdc-menu-panel {
+    background-color: var(--color_forms) !important;
+    box-shadow: 0 12px 35px #0000001a !important;
+    padding: 0 8px;
+}
+
+.mat-mdc-menu-item {
+    border-radius: 5px;
+}
