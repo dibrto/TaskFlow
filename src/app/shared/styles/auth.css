@@ -1,10 +1,10 @@
 .auth-container {
     display: flex;
-    height: 100vh;
+    height: 100dvh;
 }
 
 .auth-left {
-    width: 35%;
+    width: 40%;
     background: var(--color_blue_gray);
     color: var(--text_second);
     display: flex;
@@ -45,4 +45,15 @@
 
 .switch a:hover {    
     opacity: .8;
+}
+
+@media screen and (max-width:766px) {
+    .auth-container {
+        flex-direction: column;
+    }
+
+    .auth-left {
+        width: 100%;
+        height: 200px;
+    }
 }

@@ -1,7 +1,7 @@
 <div class="auth-container">
     <div class="auth-left">
         <a routerLink="/">TaskFlow</a>
-        <p>Create your account and start managing tasks.</p>
+        <p>Create account and start managing tasks.</p>
     </div>
 
     <div class="auth-right">
@@ -10,7 +10,14 @@
 
             <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
                 <div class="form-group">
-                    <input type="text" id="username" name="username" autocomplete="username" placeholder="" formControlName="username" />
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        autocomplete="username"
+                        placeholder=""
+                        formControlName="username"
+                    />
                     <label for="username">Username</label>
 
                     @if (registerForm.get("username")?.touched && registerForm.get("username")?.invalid) {
@@ -19,7 +26,14 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="email" id="email" name="email" autocomplete="email" formControlName="email" placeholder="" />
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        autocomplete="email"
+                        formControlName="email"
+                        placeholder=""
+                    />
                     <label for="email">Email</label>
 
                     @if (registerForm.get("email")?.touched && registerForm.get("email")?.invalid) {
@@ -29,7 +43,14 @@
 
                 <ng-container formGroupName="passwords">
                     <div class="form-group">
-                        <input type="password" id="password" name="password" autocomplete="new-password" formControlName="password" placeholder="" />
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            autocomplete="new-password"
+                            formControlName="password"
+                            placeholder=""
+                        />
                         <label for="password">Password</label>
 
                         @if (passwordsGroup.get("password")?.touched && passwordsGroup.get("password")?.invalid) {
