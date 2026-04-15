@@ -46,3 +46,10 @@ body {
 .mat-mdc-menu-item {
     border-radius: 5px;
 }
+
+.mat-mdc-menu-item .mat-icon {
+    font-size: 18px;
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 5px !important;
+}

@@ -17,8 +17,14 @@
                         </div>
                     </div>
                     <mat-menu #menu="matMenu" class="custom-menu" xPosition="before" overlapTrigger>
-                        <button mat-menu-item (click)="onOpenTaskInfo(task)">Open task</button>
-                        <button mat-menu-item (click)="onTaskDelete(task)">Delete task</button>
+                        <button mat-menu-item (click)="onOpenTaskInfo(task)">
+                            <mat-icon>view_kanban</mat-icon>
+                            <span>Open task</span>
+                        </button>
+                        <button mat-menu-item (click)="onTaskDelete(task)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete task</span>
+                        </button>
                     </mat-menu>
                 }
 
