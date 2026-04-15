@@ -3,7 +3,7 @@ import { LoaderService } from "@services/loader/loader.service";
 import { ToastrService } from "ngx-toastr";
 
 @Injectable({
-    providedIn: "root",
+    providedIn: "root"
 })
 export class ApiService {
     private toast = inject(ToastrService);
@@ -51,5 +51,14 @@ export class ApiService {
                 throw err;
             }
         });
+    }
+
+    execWithoutLoader<T>(fn: () => any): Promise<T> {
+        try {
+            return this.handleResponse<T>(fn());
+        } catch (err) {
+            this.handleError(err);
+            throw err;
+        }
     }
 }

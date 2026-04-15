@@ -21,7 +21,7 @@ export class TaskService {
     }
 
     async editTask(taskId: string, req: BoardTaskEdit): Promise<BoardTask> {
-        return this.api.exec(() =>
+        return this.api.execWithoutLoader(() =>
             this.supabase.client
                 .from("board_tasks")
                 .update({ ...req })
