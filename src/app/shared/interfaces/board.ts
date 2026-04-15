@@ -25,6 +25,7 @@ export interface BoardTask {
     title: string;
     description: string;
     board_column_id: string;
+    position: number;
 }
 
 export interface BoardTaskCreate {
@@ -35,8 +36,10 @@ export interface BoardTaskCreate {
 }
 
 export interface BoardTaskEdit {
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
+    board_column_id?: string;
+    position?: number;
 }
 
 export interface BoardGet {

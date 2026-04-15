@@ -11,9 +11,10 @@
             "@guards/*": ["src/app/core/guards/*"],
             "@features/*": ["src/app/features/*"],
             "@layout/*": ["src/app/layout/*"],
-            "@validators/*": ["src/app/shared/validators/*"],
             "@interfaces/*": ["src/app/shared/interfaces/*"],
             "@styles/*": ["src/app/shared/styles/*"],
+            "@utils/*": ["src/app/shared/utils/*"],
+            "@validators/*": ["src/app/shared/validators/*"],
             "@environments/*": ["src/app/environments/*"]
         },
         "types": []

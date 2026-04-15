@@ -5,11 +5,18 @@
 
     <div class="board-columns">
         @for (column of columns; track column.id) {
-            <div class="board-col">
+            <div
+                class="board-col"
+                cdkDropList
+                [id]="'col-' + column.id"
+                [cdkDropListConnectedTo]="connectedLists"
+                [cdkDropListData]="tasks[column.id]"
+                (cdkDropListDropped)="drop($event)"
+            >
                 <h3>{{ column.title }}</h3>
 
                 @for (task of tasks[column.id]; track task.id) {
-                    <div class="task-card-wrapper">
+                    <div class="task-card-wrapper" cdkDrag>
                         <div class="task-card" [matMenuTriggerFor]="menu">
                             <mat-icon fontSet="material-symbols-outlined" class="edit-icon">edit_square</mat-icon>
                             <h4>{{ task.title }}</h4>

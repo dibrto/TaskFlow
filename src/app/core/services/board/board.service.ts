@@ -59,7 +59,8 @@ export class BoardService {
                         id,
                         title,
                         description,
-                        board_column_id
+                        board_column_id,
+                        position
                     )`
                 )
                 .eq("id", id)
