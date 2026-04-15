@@ -9,7 +9,14 @@
             </div>
 
             <div class="sidebar-section">
-                <div class="section-title" (click)="onToggleShowBoards()">Boards</div>
+                <div class="section-title" (click)="onToggleShowBoards()">
+                    <p>Boards</p>
+                    @if (showBoards) {
+                        <mat-icon>expand_more</mat-icon>
+                    } @else {
+                        <mat-icon>expand_less</mat-icon>
+                    }
+                </div>
                 @if (showBoards) {
                     @for (board of boards$ | async; track board.id) {
                         <a [routerLink]="['/board', board.id]" routerLinkActive="active" class="nav-item">{{
