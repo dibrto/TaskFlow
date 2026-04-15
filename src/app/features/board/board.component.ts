@@ -7,6 +7,7 @@ import { switchMap } from "rxjs";
 import { Board, BoardColumn, BoardMember, BoardTask } from "@interfaces/board";
 import { BoardService } from "@services/board/board.service";
 import { TaskInfoComponent } from "./task-info/task-info.component";
+import { TaskService } from "@services/task/task.service";
 @Component({
     selector: "app-board",
     imports: [TaskInfoComponent, MatMenuModule, MatIconModule],
@@ -16,6 +17,7 @@ import { TaskInfoComponent } from "./task-info/task-info.component";
 export class BoardComponent implements OnInit {
     private route = inject(ActivatedRoute);
     private boardService = inject(BoardService);
+    private taskService = inject(TaskService);
 
     private boardId: string = "";
     board: Board | null = null;
@@ -56,6 +58,7 @@ export class BoardComponent implements OnInit {
         this.isTaskInfo = true;
         this.columnId = columnId;
     }
+
     onTaskCreated(task: BoardTask) {
         this.tasks[task.board_column_id].unshift(task);
     }
@@ -64,6 +67,7 @@ export class BoardComponent implements OnInit {
         this.isTaskInfo = true;
         this.taskInfo = task;
     }
+
     onTaskEdited(updatedTask: BoardTask) {
         const list = this.tasks[updatedTask.board_column_id];
 
@@ -74,9 +78,17 @@ export class BoardComponent implements OnInit {
         }
     }
 
-    onTaskDelete(delTask: BoardTask) {
-        const tasks = this.tasks[delTask.board_column_id].filter(t => t.id !== delTask.id);
-        this.tasks[delTask.board_column_id] = tasks;
+    async onTaskDelete(task: BoardTask) {
+        const res = confirm("Do you want to delete the task ?");
+        if (!res) return;
+
+        try {
+            const id = task.id;
+            const delTask = await this.taskService.deleteTask(id);
+
+            const tasks = this.tasks[delTask.board_column_id].filter(t => t.id !== delTask.id);
+            this.tasks[delTask.board_column_id] = tasks;
+        } catch {}
     }
 
     onCloseTaskInfo() {

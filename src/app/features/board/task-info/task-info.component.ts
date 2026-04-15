@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, OnChanges, Output } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { Board, BoardTask } from "@interfaces/board";
+import { BoardTask } from "@interfaces/board";
 import { TaskService } from "@services/task/task.service";
 
 @Component({
@@ -18,7 +18,6 @@ export class TaskInfoComponent implements OnChanges {
 
     @Input() taskInfo: BoardTask | null = null;
     @Output() edited = new EventEmitter<BoardTask>();
-    @Output() deleted = new EventEmitter<BoardTask>();
 
     private fb = inject(FormBuilder);
     private taskService = inject(TaskService);
@@ -59,13 +58,6 @@ export class TaskInfoComponent implements OnChanges {
         const id = this.taskInfo?.id ?? "";
         const updTask = await this.taskService.editTask(id, data);
         this.edited.emit(updTask);
-        this.onClose();
-    }
-
-    async onDelete() {
-        const id = this.taskInfo?.id ?? "";
-        const delTask = await this.taskService.deleteTask(id);
-        this.deleted.emit(delTask);
         this.onClose();
     }
 }
