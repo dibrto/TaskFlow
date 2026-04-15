@@ -6,16 +6,16 @@
     <div class="board-columns">
         @for (column of columns; track column.id) {
             <div class="board-col">
-                <h3>{{ column.title }}</h3>
-
                 <div
                     class="tasks"
                     cdkDropList
-                    [id]="'col-' + column.id"
+                    [id]="column.id"
                     [cdkDropListConnectedTo]="connectedLists"
                     [cdkDropListData]="tasks[column.id]"
                     (cdkDropListDropped)="drop($event)"
                 >
+                    <h3>{{ column.title }}</h3>
+
                     @for (task of tasks[column.id]; track task.id) {
                         <div class="task-card-wrapper" cdkDrag>
                             <div class="task-card" [matMenuTriggerFor]="menu">

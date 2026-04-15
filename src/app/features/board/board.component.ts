@@ -45,7 +45,7 @@ export class BoardComponent implements OnInit {
                 this.board = board;
                 this.members = board_members;
                 this.columns = board_columns;
-                this.connectedLists = this.columns.map(c => "col-" + c.id);
+                this.connectedLists = this.columns.map(c => c.id.toString());
 
                 for (const column of this.columns) {
                     this.tasks[column.id] = [];
@@ -58,11 +58,13 @@ export class BoardComponent implements OnInit {
     }
 
     async drop(event: CdkDragDrop<BoardTask[]>) {
+        // same col
         if (event.previousContainer === event.container) {
             const prevState = [...event.container.data];
+
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-            const newPos = getNewPosition(event.container.data, event.currentIndex);
             const task = event.container.data[event.currentIndex];
+            const newPos = getNewPosition(event.container.data, event.currentIndex);
 
             try {
                 const res = await this.taskService.editTask(task.id, {
@@ -73,13 +75,33 @@ export class BoardComponent implements OnInit {
             } catch {
                 this.tasks[task.board_column_id] = prevState;
             }
-        } else {
+        }
+        // diff col
+        else {
+            const prevStateContainer = [...event.container.data];
+            const prevStatePreviousContainer = [...event.previousContainer.data];
+
             transferArrayItem(
                 event.previousContainer.data,
                 event.container.data,
                 event.previousIndex,
                 event.currentIndex
             );
+            const taskId = event.container.data[event.currentIndex].id;
+            const colCurr = event.container.id;
+            const colPrev = event.previousContainer.id;
+            const newPos = getNewPosition(event.container.data, event.currentIndex);
+
+            try {
+                const res = await this.taskService.editTask(taskId, {
+                    board_column_id: colCurr,
+                    position: newPos
+                });
+                event.container.data[event.currentIndex] = res;
+            } catch {
+                this.tasks[colCurr] = prevStateContainer;
+                this.tasks[colPrev] = prevStatePreviousContainer;
+            }
         }
     }
 
