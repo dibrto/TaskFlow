@@ -7,6 +7,7 @@ import { RegisterComponent } from "@features/auth/register/register.component";
 import { authGuard } from "@guards/auth-guard/auth-guard";
 import { MainLayoutComponent } from "@layout/main-layout/main-layout.component";
 import { DashboardComponent } from "@features/dashboard/dashboard.component";
+import { boardIdGuard } from "@guards/board-id/board-id-guard";
 import { BoardComponent } from "@features/board/board.component";
 
 export const routes: Routes = [
@@ -17,7 +18,7 @@ export const routes: Routes = [
         component: MainLayoutComponent,
         children: [
             { path: "dashboard", component: DashboardComponent, canActivate: [authGuard] },
-            { path: "board/:id", component: BoardComponent, canActivate: [authGuard] }
+            { path: "board/:id", component: BoardComponent, canActivate: [authGuard, boardIdGuard] }
         ]
     },
 
