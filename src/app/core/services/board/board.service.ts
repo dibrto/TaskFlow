@@ -27,8 +27,6 @@ export class BoardService {
     }
 
     clearBoards(): void {
-        console.log(111);
-
         this.boardsSubject.next([]);
     }
 
