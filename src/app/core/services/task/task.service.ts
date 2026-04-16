@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { Board, BoardTask, BoardTaskCreate, BoardTaskEdit } from "@interfaces/board";
+import { BoardTask, BoardTaskCreate, BoardTaskEdit } from "@interfaces/board-task";
 import { ApiService } from "@services/api/api.service";
 import { SupabaseService } from "@services/supabase/supabase.service";
 

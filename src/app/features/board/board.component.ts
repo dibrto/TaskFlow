@@ -5,12 +5,13 @@ import { MatIconModule } from "@angular/material/icon";
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 import { switchMap } from "rxjs";
 
-import { Board, BoardColumn, BoardMember, BoardTask } from "@interfaces/board";
+import { Board, BoardColumn, BoardMember } from "@interfaces/board";
 import { BoardService } from "@services/board/board.service";
 import { TaskInfoComponent } from "./task-info/task-info.component";
 import { TaskService } from "@services/task/task.service";
 import getNewPosition from "@utils/position.helper";
 import { EditBoardComponent } from "./edit-board/edit-board.component";
+import { BoardTask } from "@interfaces/board-task";
 @Component({
     selector: "app-board",
     imports: [TaskInfoComponent, MatMenuModule, MatIconModule, DragDropModule, EditBoardComponent],
