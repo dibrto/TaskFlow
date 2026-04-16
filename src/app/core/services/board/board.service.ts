@@ -26,6 +26,12 @@ export class BoardService {
         this.boardsSubject.next(await this.getBoards());
     }
 
+    clearBoards(): void {
+        console.log(111);
+
+        this.boardsSubject.next([]);
+    }
+
     async createBoard(req: BoardCreate): Promise<Board> {
         const newBoard = await this.api.exec<Board>(() =>
             this.supabase.client
