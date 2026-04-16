@@ -3,22 +3,21 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "baseUrl": "./",
         "rootDir": "./src",
         "outDir": "./out-tsc/app",
         "paths": {
-            "@services/*": ["src/app/core/services/*"],
-            "@guards/*": ["src/app/core/guards/*"],
-            "@features/*": ["src/app/features/*"],
-            "@layout/*": ["src/app/layout/*"],
-            "@interfaces/*": ["src/app/shared/interfaces/*"],
-            "@styles/*": ["src/app/shared/styles/*"],
-            "@utils/*": ["src/app/shared/utils/*"],
-            "@validators/*": ["src/app/shared/validators/*"],
-            "@environments/*": ["src/app/environments/*"]
+            "@services/*": ["./src/app/core/services/*"],
+            "@guards/*": ["./src/app/core/guards/*"],
+            "@features/*": ["./src/app/features/*"],
+            "@layout/*": ["./src/app/layout/*"],
+            "@interfaces/*": ["./src/app/shared/interfaces/*"],
+            "@styles/*": ["./src/app/shared/styles/*"],
+            "@utils/*": ["./src/app/shared/utils/*"],
+            "@validators/*": ["./src/app/shared/validators/*"],
+            "@environments/*": ["./src/environments/*"]
         },
         "types": []
     },
-    "include": ["src/**/*.ts"],
-    "exclude": ["src/**/*.spec.ts"]
+    "include": ["./src/**/*.ts"],
+    "exclude": ["./src/**/*.spec.ts"]
 }
