@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
@@ -21,6 +21,7 @@ export class BoardComponent implements OnInit {
     private route = inject(ActivatedRoute);
     private boardService = inject(BoardService);
     private taskService = inject(TaskService);
+    private router = inject(Router);
 
     isEditBoard: boolean = false;
 
@@ -65,6 +66,18 @@ export class BoardComponent implements OnInit {
     }
     onBoardEdited(updBoard: Board) {
         this.board = updBoard;
+    }
+    async onBoardDelete() {
+        if (!this.board) return;
+
+        const res = confirm("Do you want to delete the board ?");
+        if (!res) return;
+
+        try {
+            const id = this.board.id;
+            await this.boardService.deleteBoard(id);
+            this.router.navigate(["/dashboard"]);
+        } catch {}
     }
 
     async drop(event: CdkDragDrop<BoardTask[]>) {

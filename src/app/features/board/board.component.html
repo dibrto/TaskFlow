@@ -1,7 +1,17 @@
 <div class="board-page">
     <div class="board-header">
         <h2>{{ board?.title }}</h2>
-        <mat-icon (click)="onToggleEditBoard()">edit_note</mat-icon>
+        <mat-icon [matMenuTriggerFor]="boardMenu">edit_note</mat-icon>
+        <mat-menu #boardMenu="matMenu" class="custom-menu" xPosition="after">
+            <button mat-menu-item (click)="onToggleEditBoard()">
+                <mat-icon>edit</mat-icon>
+                <span>Edit board</span>
+            </button>
+            <button mat-menu-item (click)="onBoardDelete()">
+                <mat-icon>delete</mat-icon>
+                <span>Delete board</span>
+            </button>
+        </mat-menu>
     </div>
 
     <div class="board-columns">

@@ -88,4 +88,14 @@ export class BoardService {
 
         return updBoard;
     }
+
+    async deleteBoard(id: string): Promise<void> {
+        const delBoard = await this.api.exec<Board>(() =>
+            this.supabase.client.from("boards").delete().eq("id", id).select("id, title, description").single()
+        );
+
+        const current = this.boardsSubject.value;
+        const updated = current.filter(b => b.id !== delBoard.id);
+        this.boardsSubject.next(updated);
+    }
 }
