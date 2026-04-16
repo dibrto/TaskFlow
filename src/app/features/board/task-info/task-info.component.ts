@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, OnChanges, Output } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { BoardTask } from "@interfaces/board";
+import { BoardTask } from "@interfaces/board-task";
 import { TaskService } from "@services/task/task.service";
 
 @Component({

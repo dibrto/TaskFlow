@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 import { switchMap } from "rxjs";
 
@@ -14,7 +15,7 @@ import { EditBoardComponent } from "./edit-board/edit-board.component";
 import { BoardTask } from "@interfaces/board-task";
 @Component({
     selector: "app-board",
-    imports: [TaskInfoComponent, MatMenuModule, MatIconModule, DragDropModule, EditBoardComponent],
+    imports: [TaskInfoComponent, MatMenuModule, MatIconModule, DragDropModule, EditBoardComponent, MatTooltipModule],
     templateUrl: "./board.component.html",
     styleUrl: "./board.component.css"
 })

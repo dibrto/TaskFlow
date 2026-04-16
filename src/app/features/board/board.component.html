@@ -32,6 +32,14 @@
                             <div class="task-card" [matMenuTriggerFor]="menu">
                                 <mat-icon fontSet="material-symbols-outlined" class="edit-icon">edit_square</mat-icon>
                                 <h4>{{ task.title }}</h4>
+                                @if (task.description) {
+                                    <mat-icon
+                                        matTooltip="This task has a description"
+                                        fontSet="material-symbols-outlined"
+                                    >
+                                        text_ad
+                                    </mat-icon>
+                                }
                                 <!-- <p>{{ task.description }}</p> -->
                             </div>
                         </div>

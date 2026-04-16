@@ -55,6 +55,10 @@
 
 .task-card {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
     padding: 0.5rem;
     padding-right: 2rem;
     background: var(--color_forms);

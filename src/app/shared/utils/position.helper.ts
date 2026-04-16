@@ -1,4 +1,4 @@
-import { BoardTask } from "@interfaces/board";
+import { BoardTask } from "@interfaces/board-task";
 
 export default function getNewPosition(tasks: BoardTask[], index: number) {
     const prev = tasks[index + 1];
