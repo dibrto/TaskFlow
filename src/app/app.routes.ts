@@ -10,17 +10,19 @@ import { DashboardComponent } from "@features/dashboard/dashboard.component";
 import { BoardComponent } from "@features/board/board.component";
 
 export const routes: Routes = [
-    { path: "", redirectTo: "/dashboard", pathMatch: "full" },
+    { path: "", redirectTo: "/login", pathMatch: "full" },
 
     {
         path: "",
         component: MainLayoutComponent,
         children: [
             { path: "dashboard", component: DashboardComponent, canActivate: [authGuard] },
-            { path: "board/:id", component: BoardComponent, canActivate: [authGuard] },
-        ],
+            { path: "board/:id", component: BoardComponent, canActivate: [authGuard] }
+        ]
     },
 
     { path: "login", component: LoginComponent, canActivate: [guestGuard] },
     { path: "register", component: RegisterComponent, canActivate: [guestGuard] },
+
+    { path: "**", redirectTo: "/login" }
 ];
