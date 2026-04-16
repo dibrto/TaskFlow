@@ -72,7 +72,7 @@ export class BoardService {
                 .eq("id", id)
                 .order("board_column_id", { referencedTable: "board_tasks" })
                 .order("position", { referencedTable: "board_tasks", ascending: false })
-                .single()
+                .maybeSingle()
         );
     }
 
