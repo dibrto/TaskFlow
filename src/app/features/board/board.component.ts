@@ -46,11 +46,6 @@ export class BoardComponent implements OnInit {
                 })
             )
             .subscribe(data => {
-                if (!data) {
-                    this.router.navigate(["/dashboard"]);
-                    return;
-                }
-
                 const { board_columns, board_tasks, board_members, ...board } = data;
 
                 this.board = board;
