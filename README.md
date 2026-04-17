@@ -74,7 +74,7 @@ The application allows users to create boards, add tasks, and track progress in 
 
 ---
 
-#### Board Columns
+#### Board Members
 
 - id
 - board_id
