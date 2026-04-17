@@ -16,22 +16,25 @@
 
     <div class="board-columns">
         @for (column of columns; track column.id) {
-            <div class="board-col">
+            <div class="task-col">
+                <div class="task-col-info">
+                    <div class="status-dot"></div>
+                    <span>{{ column.title }}</span>
+                </div>
+
                 <div
-                    class="tasks"
+                    class="task-list"
                     cdkDropList
                     [id]="column.id"
                     [cdkDropListConnectedTo]="connectedLists"
                     [cdkDropListData]="tasks[column.id]"
                     (cdkDropListDropped)="drop($event)"
                 >
-                    <h3>{{ column.title }}</h3>
-
                     @for (task of tasks[column.id]; track task.id) {
-                        <div class="task-card-wrapper" cdkDrag>
-                            <div class="task-card" [matMenuTriggerFor]="menu">
+                        <div cdkDrag>
+                            <div class="task" [matMenuTriggerFor]="menu">
                                 <mat-icon fontSet="material-symbols-outlined" class="edit-icon">edit_square</mat-icon>
-                                <h4>{{ task.title }}</h4>
+                                <span>{{ task.title }}</span>
                                 @if (task.description) {
                                     <mat-icon
                                         matTooltip="This task has a description"
@@ -40,7 +43,6 @@
                                         text_ad
                                     </mat-icon>
                                 }
-                                <!-- <p>{{ task.description }}</p> -->
                             </div>
                         </div>
                         <mat-menu #menu="matMenu" class="custom-menu" xPosition="before" overlapTrigger>
@@ -61,20 +63,20 @@
                 </div>
             </div>
         }
+
+        @if (isTaskInfo) {
+            <app-task-info
+                [boardId]="board?.id ?? null"
+                [columnId]="this.columnId"
+                [taskInfo]="this.taskInfo"
+                (created)="onTaskCreated($event)"
+                (edited)="onTaskEdited($event)"
+                (close)="onCloseTaskInfo()"
+            />
+        }
+
+        @if (isEditBoard) {
+            <app-edit-board [boardInfo]="board" (close)="onToggleEditBoard()" (edited)="onBoardEdited($event)" />
+        }
     </div>
-
-    @if (isTaskInfo) {
-        <app-task-info
-            [boardId]="board?.id ?? null"
-            [columnId]="this.columnId"
-            [taskInfo]="this.taskInfo"
-            (created)="onTaskCreated($event)"
-            (edited)="onTaskEdited($event)"
-            (close)="onCloseTaskInfo()"
-        />
-    }
-
-    @if (isEditBoard) {
-        <app-edit-board [boardInfo]="board" (close)="onToggleEditBoard()" (edited)="onBoardEdited($event)" />
-    }
 </div>

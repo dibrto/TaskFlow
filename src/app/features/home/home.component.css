@@ -81,6 +81,7 @@
 .hero-visual {
     display: flex;
     justify-content: center;
+    overflow: hidden;
 }
 
 .section-header {

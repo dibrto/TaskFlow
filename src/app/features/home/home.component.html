@@ -19,22 +19,45 @@
                 <a routerLink="/register" class="btn btn-primary">Get Started</a>
             </div>
         </div>
+
         <div class="hero-visual">
             <div class="task-col">
                 <div class="task-col-info">
                     <div class="status-dot"></div>
                     <span>Project board</span>
                 </div>
-                <div class="task-list">
-                    <div class="task">
-                        <span>Design landing page</span>
-                    </div>
-                    <div class="task">
-                        <span>Prepare backlog</span>
-                    </div>
-                    <div class="task">
-                        <span>Invite team</span>
-                    </div>
+
+                <div class="task-list" cdkDropList [cdkDropListData]="tasks" (cdkDropListDropped)="drop($event)">
+                    @for (task of tasks; track task.id) {
+                        <div cdkDrag>
+                            <div class="task" [matMenuTriggerFor]="menu">
+                                <mat-icon fontSet="material-symbols-outlined" class="edit-icon">edit_square</mat-icon>
+                                <span>{{ task.title }}</span>
+                                @if (task.description) {
+                                    <mat-icon
+                                        matTooltip="This task has a description"
+                                        fontSet="material-symbols-outlined"
+                                    >
+                                        text_ad
+                                    </mat-icon>
+                                }
+                            </div>
+                        </div>
+                        <mat-menu #menu="matMenu" class="custom-menu" xPosition="before" overlapTrigger>
+                            <button mat-menu-item>
+                                <mat-icon>view_kanban</mat-icon>
+                                <span>Open task</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete task</span>
+                            </button>
+                        </mat-menu>
+                    }
+                </div>
+
+                <div class="add-card">
+                    <h4>Create new task</h4>
                 </div>
             </div>
         </div>
