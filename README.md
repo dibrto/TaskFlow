@@ -28,6 +28,7 @@ The application allows users to create boards, add tasks, and track progress in 
 
 ### 3. Public Features
 
+- Home page
 - Login page
 - Registration page
 
@@ -50,7 +51,7 @@ The application allows users to create boards, add tasks, and track progress in 
 
 ### 5. Main Application Flow
 
-1. User opens the Login page
+1. User opens the home page
 2. User registers or logs in
 3. After successful authentication, the user is redirected to the boards dashboard
 4. User creates a new board or open an existing board
