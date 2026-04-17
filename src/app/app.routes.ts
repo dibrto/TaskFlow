@@ -20,7 +20,7 @@ export const routes: Routes = [
         component: MainLayoutComponent,
         children: [
             { path: "dashboard", component: DashboardComponent, canActivate: [authGuard] },
-            { path: "board/:id", component: BoardComponent, canActivate: [authGuard, boardIdGuard, boardExistsGuard] }
+            { path: "board/:id", component: BoardComponent, canActivate: [authGuard, boardIdGuard] }
         ]
     },
 
