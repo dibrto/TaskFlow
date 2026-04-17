@@ -29,6 +29,6 @@ export class MainLayoutComponent implements OnInit {
 
     async onLogout() {
         await this.authService.logout();
-        this.router.navigate(["/login"]);
+        this.router.navigate(["/"]);
     }
 }

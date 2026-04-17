@@ -9,7 +9,6 @@ import { MainLayoutComponent } from "@layout/main-layout/main-layout.component";
 import { DashboardComponent } from "@features/dashboard/dashboard.component";
 import { HomeComponent } from "@features/home/home.component";
 import { boardIdGuard } from "@guards/board-id/board-id-guard";
-import { boardExistsGuard } from "@guards/board-exists/board-exists-guard";
 import { BoardComponent } from "@features/board/board.component";
 
 export const routes: Routes = [

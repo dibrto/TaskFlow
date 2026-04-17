@@ -2,6 +2,7 @@
 @import "ngx-toastr/toastr";
 @import "./app/shared/styles/auth.css";
 @import "./app/shared/styles/forms.css";
+@import "./app/shared/styles/task.css";
 
 :root,
 :root.light {
@@ -13,6 +14,21 @@
     --color_blue_gray: #1f2a3c;
     --color_main_bg: #f4f6f8;
     --color_blue_main: #5b5ef7;
+
+    --color-text: #111827;
+    --color-muted: #4b5563;
+    --color-muted-strong: #6b7280;
+    --color-background: #f8fafc;
+    --color-surface: #f8fafc;
+    --color-surface-strong: #ffffff;
+    --color-border: #e5e7eb;
+    --color-primary: #4f46e5;
+    --color-primary-soft: #eef2ff;
+    --color-accent: #7c3aed;
+    --color-accent-soft: #ede9fe;
+    --color-cta: #312e81;
+    --color-shadow: rgba(15, 23, 42, 0.08);
+    --color-shadow-soft: rgba(15, 23, 42, 0.05);
 }
 
 * {
