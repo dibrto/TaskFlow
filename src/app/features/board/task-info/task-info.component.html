@@ -8,7 +8,7 @@
         </div>
 
         <div class="form-group">
-            <input type="text" id="title" placeholder="" formControlName="title" />
+            <textarea type="text" id="title" placeholder="" formControlName="title"></textarea>
             <label for="title">Title</label>
 
             @if (taskForm.get("title")?.touched && taskForm.get("title")?.invalid) {
@@ -17,7 +17,13 @@
         </div>
 
         <div class="form-group">
-            <input type="text" id="description" placeholder="" formControlName="description" />
+            <textarea
+                class="description"
+                type="text"
+                id="description"
+                placeholder=""
+                formControlName="description"
+            ></textarea>
             <label for="description">Description</label>
         </div>
 
