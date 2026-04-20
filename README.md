@@ -5,6 +5,8 @@
 The goal of TaskFlow is to help users organize and manage their tasks efficiently using a board-based (Kanban-style) system.
 The application allows users to create boards, add tasks, and track progress in a structured and intuitive way.
 
+The app is available at https://taskflow-bg.vercel.app/
+
 ---
 
 ### 2. User Roles
@@ -139,10 +141,10 @@ The project follows a modular and scalable Angular architecture:
 ### 8. Technologies Used
 
 - HTML / CSS
+- TypeScript
 - Angular
 - Angular Material (e.g. icons, dropdown menus, tooltips)
 - Angular SDK (e.g. Drag & Drop)
-- TypeScript
 - RxJS
 - Supabase (Backend & Database)
 
