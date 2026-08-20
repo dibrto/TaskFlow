@@ -32,7 +32,7 @@
 }
 
 .task-col {
-    width: 310px;
+    width: 320px;
 }
 
 .task-col:nth-child(1) .status-dot {
