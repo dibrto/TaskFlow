@@ -79,13 +79,13 @@
 
 .task span {
     font-size: 0.96rem;
+    width: 95%;
 }
 
 @media (hover: hover){
     .task:hover {
         transform: translateY(-2px);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04),0 8px 24px rgba(0, 0, 0, 0.08);
-        padding-right: 2rem;
     }
 
     .task:hover .edit-icon {
