@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnChanges, Output } from "@angular/core";
+import { Component, EventEmitter, HostListener, inject, Input, OnChanges, Output } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { BoardTask } from "@interfaces/board-task";
 import { TaskService } from "@services/task/task.service";
@@ -41,6 +41,16 @@ export class TaskInfoComponent implements OnChanges {
         this.close.emit();
     }
 
+    onModalClick(event: Event){
+        if (event.target === event.currentTarget)
+            this.onClose();
+    }
+
+    @HostListener('document:keydown.escape')
+    onEscape(): void {
+        this.onClose();
+    }
+
     async onCreate() {
         const data = this.taskForm.value;
         const req = {
@@ -64,7 +74,7 @@ export class TaskInfoComponent implements OnChanges {
     autoResize(event: Event): void {
         const textarea = event.target as HTMLTextAreaElement;
         const styles = getComputedStyle(textarea);
-        
+
         textarea.style.height = 'auto'; // reset the height
 
         const borderHeight = parseFloat(styles.borderTopWidth) + parseFloat(styles.borderBottomWidth);
