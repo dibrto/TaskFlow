@@ -91,6 +91,10 @@
     .task:hover .edit-icon {
         display: block;
     }
+
+    .task:hover .delete-icon {
+        display: block;
+    }
 }
 
 

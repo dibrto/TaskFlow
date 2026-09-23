@@ -32,29 +32,16 @@
                 >
                     @for (task of tasks[column.id]; track task.id) {
                         <div cdkDrag>
-                            <div class="task" [matMenuTriggerFor]="menu">
+                            <div class="task" (click)="onOpenTaskInfo(task)">
                                 <mat-icon fontSet="material-symbols-outlined" class="edit-icon">edit_square</mat-icon>
+                                
                                 <span>{{ task.title }}</span>
+
                                 @if (task.description) {
-                                    <mat-icon
-                                        matTooltip="This task has a description"
-                                        fontSet="material-symbols-outlined"
-                                    >
-                                        text_ad
-                                    </mat-icon>
+                                    <mat-icon matTooltip="This task has a description" fontSet="material-symbols-outlined">text_ad</mat-icon>
                                 }
                             </div>
-                        </div>
-                        <mat-menu #menu="matMenu" class="custom-menu" xPosition="before" overlapTrigger>
-                            <button mat-menu-item (click)="onOpenTaskInfo(task)">
-                                <mat-icon>view_kanban</mat-icon>
-                                <span>Open task</span>
-                            </button>
-                            <button mat-menu-item (click)="onTaskDelete(task)">
-                                <mat-icon>delete</mat-icon>
-                                <span>Delete task</span>
-                            </button>
-                        </mat-menu>
+                        </div>                     
                     }
                 </div>
 
