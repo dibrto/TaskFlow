@@ -63,7 +63,13 @@ export class TaskInfoComponent implements OnChanges {
 
     autoResize(event: Event): void {
         const textarea = event.target as HTMLTextAreaElement;
+        const styles = getComputedStyle(textarea);
+        
+        textarea.style.height = 'auto'; // reset the height
+
+        const borderHeight = parseFloat(styles.borderTopWidth) + parseFloat(styles.borderBottomWidth);
         const maxHeight = window.innerHeight * 0.65;
-        textarea.style.height = `${Math.min(textarea.scrollHeight + 5, maxHeight)}px`;
+
+        textarea.style.height = `${Math.min(textarea.scrollHeight + borderHeight, maxHeight)}px`;
     }
 }
