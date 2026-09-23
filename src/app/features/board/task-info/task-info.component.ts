@@ -11,6 +11,8 @@ import { TaskService } from "@services/task/task.service";
 })
 export class TaskInfoComponent implements OnChanges {
     @Output() close = new EventEmitter<void>();
+    isClosing = false;
+    private readonly animationDuration = 200;
 
     @Input() boardId: string | null = null;
     @Input() columnId: string | null = null;
@@ -37,8 +39,16 @@ export class TaskInfoComponent implements OnChanges {
         }
     }
 
-    onClose() {
-        this.close.emit();
+   onClose(): void {
+        if (this.isClosing) {
+            return;
+        }
+
+        this.isClosing = true;
+
+        setTimeout(() => {
+            this.close.emit();
+        }, this.animationDuration);
     }
 
     onModalClick(event: Event){
