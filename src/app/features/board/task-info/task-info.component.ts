@@ -60,4 +60,10 @@ export class TaskInfoComponent implements OnChanges {
         this.edited.emit(updTask);
         this.onClose();
     }
+
+    autoResize(event: Event): void {
+        const textarea = event.target as HTMLTextAreaElement;
+        const maxHeight = window.innerHeight * 0.65;
+        textarea.style.height = `${Math.min(textarea.scrollHeight + 5, maxHeight)}px`;
+    }
 }

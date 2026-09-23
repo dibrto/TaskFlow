@@ -10,3 +10,8 @@
 .form-container {
     margin: 3rem;
 }
+
+.form-group textarea.description {
+    min-height: 7rem;
+    height: auto;
+}
