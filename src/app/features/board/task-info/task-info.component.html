@@ -1,4 +1,4 @@
-<div class="modal" (click)="onModalClick($event)">
+<div class="modal" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)">
     <form 
         class="form-container modal-content"
         [formGroup]="taskForm"

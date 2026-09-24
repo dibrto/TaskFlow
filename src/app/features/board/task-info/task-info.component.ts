@@ -13,6 +13,7 @@ export class TaskInfoComponent implements OnChanges {
     @Output() close = new EventEmitter<void>();
     isClosing = false;
     private readonly animationDuration = 200;
+    private mouseDownTarget: EventTarget | null = null;
 
     @Input() boardId: string | null = null;
     @Input() columnId: string | null = null;
@@ -51,9 +52,18 @@ export class TaskInfoComponent implements OnChanges {
         }, this.animationDuration);
     }
 
-    onModalClick(event: Event){
-        if (event.target === event.currentTarget)
+    onMouseDown(event: MouseEvent) {
+        this.mouseDownTarget = event.target;
+    }
+
+    onMouseUp(event: MouseEvent) {
+        const startedOnBackdrop = this.mouseDownTarget === event.currentTarget;
+        const endedOnBackdrop = event.target === event.currentTarget;
+
+        if (startedOnBackdrop && endedOnBackdrop)
             this.onClose();
+
+        this.mouseDownTarget = null;
     }
 
     @HostListener('document:keydown.escape')
