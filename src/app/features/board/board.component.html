@@ -55,7 +55,7 @@
             <app-task-info
                 [boardId]="board?.id ?? null"
                 [columnId]="this.columnId"
-                [taskInfo]="this.taskInfo"
+                [taskId]="this.taskInfo?.id ?? null"
                 (created)="onTaskCreated($event)"
                 (edited)="onTaskEdited($event)"
                 (deleted)="onTaskDeleted($event)"

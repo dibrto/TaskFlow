@@ -1,6 +1,6 @@
-import { Component, EventEmitter, HostListener, inject, Input, OnChanges, Output } from "@angular/core";
+import { Component, EventEmitter, HostListener, inject, Input, OnChanges, OnInit, Output, signal } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { BoardTask } from "@interfaces/board-task";
+import { BoardTask, BoardTaskDetails } from "@interfaces/board-task";
 import { TaskService } from "@services/task/task.service";
 import { MatIcon } from "@angular/material/icon";
 
@@ -10,37 +10,54 @@ import { MatIcon } from "@angular/material/icon";
     templateUrl: "./task-info.component.html",
     styleUrl: "./task-info.component.css"
 })
-export class TaskInfoComponent implements OnChanges {
+export class TaskInfoComponent implements OnInit {
     @Output() close = new EventEmitter<void>();
     isClosing = false;
     private readonly animationDuration = 200;
     private mouseDownTarget: EventTarget | null = null;
 
+    @Input() taskId: string | null = null;
     @Input() boardId: string | null = null;
     @Input() columnId: string | null = null;
     @Output() created = new EventEmitter<BoardTask>();
 
-    @Input() taskInfo: BoardTask | null = null;
+    // @Input() taskInfo: BoardTaskDetails | null = null;
     @Output() edited = new EventEmitter<BoardTask>();
     @Output() deleted = new EventEmitter<BoardTask>();
 
     private fb = inject(FormBuilder);
     private taskService = inject(TaskService);
 
+    taskInfo: BoardTaskDetails | null = null;
+    readonly isLoading = signal(false);
+
     taskForm: FormGroup = this.fb.group({
         title: ["", [Validators.required]],
         description: [""]
     });
 
-    get isTaskInfo() {
-        return !!this.taskInfo;
+    get isEdit() {
+        return !!this.taskId;
     }
 
-    ngOnChanges() {
-        if (this.taskInfo) {
-            this.taskForm.patchValue(this.taskInfo);
+    async ngOnInit() {
+        if (!this.taskId){
+            return;
         }
-    }
+
+        this.isLoading.set(true);
+
+        try {
+            this.taskInfo = await this.taskService.getTask(this.taskId);
+
+            this.taskForm.patchValue({
+                title: this.taskInfo.title,
+                description: this.taskInfo.description,
+            });
+        } finally {
+            this.isLoading.set(false);
+        }
+    }   
 
    onClose(): void {
         if (this.isClosing) {

@@ -2,16 +2,17 @@
     <form 
         class="form-container modal-content"
         [formGroup]="taskForm"
-        (ngSubmit)="!isTaskInfo ? onCreate() : onEdit()"
+        (ngSubmit)="!isEdit ? onCreate() : onEdit()"
         [class.closing]="isClosing"
+        [attr.aria-busy]="isLoading()"
     >
         <header class="modal-header">
             <div>
-                <h1>{{ isTaskInfo ? 'Edit task' : 'Create task' }}</h1>
+                <h1>{{ isEdit ? 'Edit task' : 'Create task' }}</h1>
                 <!-- TODO: implement buzinnes logic -->
                 <div class="task-meta">
                     <span class="status-pill"><span class="status-dot"></span>{{taskInfo?.board_column_id}}</span>
-                    <span class="updated">{{ isTaskInfo ? 'Last updated today at 10:24' : 'Add the details for this task' }}</span>
+                    <span class="updated">{{ isEdit ? 'Last updated today at 10:24' : 'Add the details for this task' }}</span>
                 </div>
             </div>
             <button class="close" type="button" aria-label="Close" (click)="onClose()">&times;</button>
@@ -21,7 +22,12 @@
 
         <div class="form-group">
             <label class="field-label" for="title">Title <span>*</span></label>
-            <input type="text" id="title" placeholder="Task title" formControlName="title" />
+            <div class="field-shell">
+                <input type="text" id="title" placeholder="Task title" formControlName="title" />
+                @if (isLoading()) {
+                    <span class="field-skeleton" aria-label="Loading title"></span>
+                }
+            </div>
 
             @if (taskForm.get("title")?.touched && taskForm.get("title")?.invalid) {
                 <p class="error">Title is required!</p>
@@ -29,14 +35,21 @@
         </div>
 
         <div class="form-group">
-            <textarea
-                class="description"
-                id="description"
-                placeholder="Add a description"
-                formControlName="description"
-                (input)="autoResize($event)"
-            ></textarea>
-            <span class="character-count">{{ taskForm.get('description')?.value?.length || 0 }}/2000</span>
+            <div class="field-shell">
+                <textarea
+                    class="description"
+                    id="description"
+                    placeholder="Add a description"
+                    formControlName="description"
+                    (input)="autoResize($event)"
+                ></textarea>
+                @if (isLoading()) {
+                    <span class="field-skeleton" aria-label="Loading description"></span>
+                }
+            </div>
+            @if (!isLoading()) {
+                <span class="character-count">{{ taskForm.get('description')?.value?.length || 0 }}/2000</span>
+            }
         </div>
 
         <!-- until bussines logic is implemented -->
@@ -70,11 +83,11 @@
         <div class="divider footer-divider"></div> -->
 
         <footer class="modal-footer">
-            @if (isTaskInfo) {
+            @if (isEdit) {
                 <button class="delete-button" type="button" (click)="onDelete()"><mat-icon fontSet="material-symbols-outlined">delete</mat-icon> Delete task</button>
             }
             <div class="footer-actions">
-                <button class="btn-primary" type="submit" [disabled]="taskForm.invalid">{{ isTaskInfo ? 'Save changes' : 'Create task' }}</button>
+                <button class="btn-primary" type="submit" [disabled]="taskForm.invalid">{{ isEdit ? 'Save changes' : 'Create task' }}</button>
                 <button class="cancel-button" type="button" (click)="onClose()">Cancel</button>
             </div>
         </footer>

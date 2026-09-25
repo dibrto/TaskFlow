@@ -157,6 +157,41 @@
     scrollbar-width: thin;
 }
 
+.field-shell {
+    position: relative;
+}
+
+.field-skeleton {
+    position: relative;
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    overflow: hidden;
+    display: block;
+    border: 1px solid #dbe2ed;
+    border-radius: 10px;
+    background: #e8edf5;
+}
+
+.field-skeleton::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / 70%) 50%, transparent 80%);
+    content: "";
+    animation: skeletonShimmer 1.4s ease-in-out infinite;
+    transform: translateX(-100%);
+}
+
+.field-skeleton[aria-label="Loading description"] {
+    min-height: 7rem;
+}
+
+@keyframes skeletonShimmer {
+    to {
+        transform: translateX(100%);
+    }
+}
+
 .character-count {
     display: block;
     margin-top: 5px;
@@ -233,7 +268,7 @@
     gap: 5px;
     border: 0;
     background: transparent;
-    color: #ef3f59;
+    color: var(--color_red);
     cursor: pointer;
 }
 
@@ -262,7 +297,6 @@
     margin: 0;
     padding: 0 18px;
     border: 0;
-    background: #504cf5;
 }
 
 @media (max-width: 600px) {

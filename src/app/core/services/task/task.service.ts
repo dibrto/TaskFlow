@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { BoardTask, BoardTaskCreate, BoardTaskEdit } from "@interfaces/board-task";
+import { BoardTask, BoardTaskCreate, BoardTaskDetails, BoardTaskEdit } from "@interfaces/board-task";
 import { ApiService } from "@services/api/api.service";
 import { SupabaseService } from "@services/supabase/supabase.service";
 
@@ -17,6 +17,16 @@ export class TaskService {
                 .insert({ ...req })
                 .select("id, title, description, board_column_id, position")
                 .single()
+        );
+    }
+
+    async getTask(taskId: string): Promise<BoardTaskDetails> {
+        return this.api.execWithoutLoader(() =>
+            this.supabase.client
+                .from("board_tasks")
+                .select("id, title, description, board_column_id, position")
+                .eq("id", taskId)
+                .maybeSingle()
         );
     }
 
