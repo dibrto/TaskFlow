@@ -90,16 +90,22 @@
 /*TODO change all buttons with this */
 .modal-content .close { 
     position: static;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border: 0;
+    border-radius: 50px;
     background: transparent;
     color: var(--text_main);
     cursor: pointer;
     filter: none;
-    font-size: 29px;
-    font-weight: 300;
+    font-size: 26px;
     line-height: 24px;
+}
+
+@media (hover: hover) {
+   .modal-content .close:hover { 
+        background: var(--color_main_bg);
+    }
 }
 
 .divider {
@@ -265,6 +271,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    padding: 0 5px;
     border: 0;
     background: transparent;
     color: var(--color_red);
@@ -279,7 +286,14 @@
 
 .delete-button mat-icon {
     font-size: 20px;
-    line-height: normal;
+    width: 20px;
+    height: 20px;
+}
+
+@media (hover: hover) {
+   .delete-button:hover { 
+        background: var(--color_main_bg);
+    }
 }
 
 .cancel-button {
