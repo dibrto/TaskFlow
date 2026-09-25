@@ -1,5 +1,7 @@
 .modal-content {
-    width: 600px;
+    width: min(678px, calc(100vw - 32px));
+    padding: 34px 38px 28px;
+    border-radius: 14px;
 
     opacity: 0;
     transform: scale(0.98);
@@ -36,11 +38,256 @@
     align-items: flex-start;
 }
 
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.modal-header h1 {
+    margin: 0 0 14px;
+    color: #15213b;
+    font-size: 25px;
+}
+
+.task-meta {
+    display: flex;
+    align-items: baseline;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.status-pill,
+.select-like {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.status-pill {
+    padding: 7px 12px;
+    border-radius: 8px;
+    background: #f1f4fb;
+    color: #293650;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+}
+
+.updated {
+    color: #71809c;
+    font-size: 12px;
+}
+
 .form-container {
     margin: 3rem;
+}
+
+/*TODO change all buttons with this */
+.modal-content .close { 
+    position: static;
+    width: 28px;
+    height: 28px;
+    border: 0;
+    background: transparent;
+    color: #15213b;
+    cursor: pointer;
+    filter: none;
+    font-size: 29px;
+    font-weight: 300;
+    line-height: 24px;
+}
+
+.divider {
+    height: 1px;
+    margin: 22px 0 24px;
+    background: #e3e8f0;
+}
+
+/*TODO change all buttons with this */
+.form-group .field-label,
+.detail-field .field-label {
+    position: static;
+    left: auto;
+    top: auto;
+    padding: 0;
+    pointer-events: auto;
+    background: transparent;
+    display: block;
+    margin-bottom: 8px;
+    color: #4e607f;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.field-label span {
+    color: #e5485d;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid #cfd8e6;
+    border-radius: 10px;
+    outline: none;
+    background: #fff;
+    color: #26344e;
+    font: inherit;
+    font-size: 16px;
+}
+
+.form-group input {
+    height: 46px;
+    padding: 0 16px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #6373f6;
+    box-shadow: 0 0 0 3px #eaebff;
 }
 
 .form-group textarea.description {
     min-height: 7rem;
     height: auto;
+    scrollbar-width: thin;
+}
+
+.character-count {
+    display: block;
+    margin-top: 5px;
+    color: #71809c;
+    font-size: 12px;
+    text-align: right;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.select-like {
+    min-height: 44px;
+    padding: 0 13px;
+    border: 1px solid #cfd8e6;
+    border-radius: 9px;
+    color: #293650;
+    font-size: 14px;
+}
+
+.chevron {
+    margin-left: auto;
+    color: #627392;
+}
+
+.priority-flag {
+    color: #f59e0b;
+    font-size: 22px;
+    height: 22px;
+    width: 22px;
+}
+
+.person-icon {
+    color: #6c7c98;
+    font-size: 22px;
+    height: 22px;
+    width: 22px;
+}
+
+.footer-divider {
+    margin: 31px 0 23px;
+}
+
+.modal-footer,
+.footer-actions {
+    display: flex;
+    align-items: center;
+}
+
+.modal-footer {
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.footer-actions {
+    gap: 12px;
+}
+
+.delete-button,
+.cancel-button,
+.btn-primary {
+    min-height: 48px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.delete-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 0;
+    background: transparent;
+    color: #ef3f59;
+    cursor: pointer;
+}
+
+.delete-button span {
+    margin-right: 8px;
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.delete-button mat-icon {
+    font-size: 20px;
+    line-height: normal;
+}
+
+.cancel-button {
+    min-width: 104px;
+    padding: 0 18px;
+    border: 1px solid #d3ddec;
+    background: #f9fbff;
+    color: #294064;
+    cursor: pointer;
+}
+
+.btn-primary {
+    min-width: 136px;
+    margin: 0;
+    padding: 0 18px;
+    border: 0;
+    background: #504cf5;
+}
+
+@media (max-width: 600px) {
+    .modal-content {
+        padding: 26px 22px 22px;
+    }
+
+    .task-meta {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .footer-actions,
+    .cancel-button,
+    .btn-primary {
+        width: 100%;
+    }
 }

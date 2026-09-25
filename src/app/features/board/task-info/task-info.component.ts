@@ -2,10 +2,11 @@ import { Component, EventEmitter, HostListener, inject, Input, OnChanges, Output
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { BoardTask } from "@interfaces/board-task";
 import { TaskService } from "@services/task/task.service";
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
     selector: "app-task-info",
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, MatIcon],
     templateUrl: "./task-info.component.html",
     styleUrl: "./task-info.component.css"
 })
@@ -21,6 +22,7 @@ export class TaskInfoComponent implements OnChanges {
 
     @Input() taskInfo: BoardTask | null = null;
     @Output() edited = new EventEmitter<BoardTask>();
+    @Output() deleted = new EventEmitter<BoardTask>();
 
     private fb = inject(FormBuilder);
     private taskService = inject(TaskService);
@@ -91,6 +93,16 @@ export class TaskInfoComponent implements OnChanges {
         this.onClose();
     }
 
+    async onDelete() {
+        if (!this.taskInfo || !confirm("Do you want to delete the task ?")) {
+            return;
+        }
+
+        const deletedTask = await this.taskService.deleteTask(this.taskInfo.id);
+        this.deleted.emit(deletedTask);
+        this.onClose();
+    }
+
     autoResize(event: Event): void {
         const textarea = event.target as HTMLTextAreaElement;
         const styles = getComputedStyle(textarea);
@@ -98,7 +110,7 @@ export class TaskInfoComponent implements OnChanges {
         textarea.style.height = 'auto'; // reset the height
 
         const borderHeight = parseFloat(styles.borderTopWidth) + parseFloat(styles.borderBottomWidth);
-        const maxHeight = window.innerHeight * 0.65;
+        const maxHeight = window.innerHeight * 0.49;
 
         textarea.style.height = `${Math.min(textarea.scrollHeight + borderHeight, maxHeight)}px`;
     }

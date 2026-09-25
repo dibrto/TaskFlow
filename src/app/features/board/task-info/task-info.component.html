@@ -5,16 +5,23 @@
         (ngSubmit)="!isTaskInfo ? onCreate() : onEdit()"
         [class.closing]="isClosing"
     >
-        <h1>Task</h1>
+        <header class="modal-header">
+            <div>
+                <h1>{{ isTaskInfo ? 'Edit task' : 'Create task' }}</h1>
+                <!-- TODO: implement buzinnes logic -->
+                <div class="task-meta">
+                    <span class="status-pill"><span class="status-dot"></span>{{taskInfo?.board_column_id}}</span>
+                    <span class="updated">{{ isTaskInfo ? 'Last updated today at 10:24' : 'Add the details for this task' }}</span>
+                </div>
+            </div>
+            <button class="close" type="button" aria-label="Close" (click)="onClose()">&times;</button>
+        </header>
 
-        <div class="close" (click)="onClose()">
-            <div class="m_line_1"></div>
-            <div class="m_line_2"></div>
-        </div>
+        <div class="divider"></div>
 
         <div class="form-group">
-            <textarea type="text" id="title" placeholder="" formControlName="title"></textarea>
-            <label for="title">Title</label>
+            <label class="field-label" for="title">Title <span>*</span></label>
+            <input type="text" id="title" placeholder="Task title" formControlName="title" />
 
             @if (taskForm.get("title")?.touched && taskForm.get("title")?.invalid) {
                 <p class="error">Title is required!</p>
@@ -24,15 +31,52 @@
         <div class="form-group">
             <textarea
                 class="description"
-                type="text"
                 id="description"
-                placeholder=""
+                placeholder="Add a description"
                 formControlName="description"
                 (input)="autoResize($event)"
             ></textarea>
-            <label for="description">Description</label>
+            <span class="character-count">{{ taskForm.get('description')?.value?.length || 0 }}/2000</span>
         </div>
 
-        <button class="btn-primary" [disabled]="taskForm.invalid">Save</button>
+        <!-- until bussines logic is implemented -->
+        <!-- <div class="details-grid">
+            <div class="detail-field">
+                <span class="field-label">Status</span>
+                <div class="select-like">
+                    <span class="status-dot"></span>
+                    In progress
+                    <mat-icon fontSet="material-symbols-outlined" class="chevron">stat_minus_1</mat-icon>
+                </div>
+            </div>
+            <div class="detail-field">
+                <span class="field-label">Priority</span>
+                <div class="select-like">
+                    <mat-icon class="priority-flag">flag</mat-icon>
+                    Medium 
+                    <mat-icon fontSet="material-symbols-outlined" class="chevron">stat_minus_1</mat-icon>
+                </div>
+            </div>
+            <div class="detail-field">
+                <span class="field-label">Assignee</span>
+                <div class="select-like">
+                    <mat-icon>person_outline</mat-icon>
+                    Unassigned
+                    <mat-icon fontSet="material-symbols-outlined" class="chevron">stat_minus_1</mat-icon>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider footer-divider"></div> -->
+
+        <footer class="modal-footer">
+            @if (isTaskInfo) {
+                <button class="delete-button" type="button" (click)="onDelete()"><mat-icon fontSet="material-symbols-outlined">delete</mat-icon> Delete task</button>
+            }
+            <div class="footer-actions">
+                <button class="btn-primary" type="submit" [disabled]="taskForm.invalid">{{ isTaskInfo ? 'Save changes' : 'Create task' }}</button>
+                <button class="cancel-button" type="button" (click)="onClose()">Cancel</button>
+            </div>
+        </footer>
     </form>
 </div>

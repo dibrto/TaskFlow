@@ -159,6 +159,12 @@ export class BoardComponent implements OnInit {
         }
     }
 
+    onTaskDeleted(deletedTask: BoardTask) {
+        this.tasks[deletedTask.board_column_id] = this.tasks[deletedTask.board_column_id].filter(
+            task => task.id !== deletedTask.id
+        );
+    }
+
     async onTaskDelete(task: BoardTask) {
         const res = confirm("Do you want to delete the task ?");
         if (!res) return;
