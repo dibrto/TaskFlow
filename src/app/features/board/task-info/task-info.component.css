@@ -46,7 +46,7 @@
 
 .modal-header h1 {
     margin: 0 0 14px;
-    color: #15213b;
+    color: var(--text_main);
     font-size: 25px;
 }
 
@@ -67,8 +67,8 @@
 .status-pill {
     padding: 7px 12px;
     border-radius: 8px;
-    background: #f1f4fb;
-    color: #293650;
+    background: var(--color_main_bg);
+    color: var(--text_main);
     font-size: 13px;
     font-weight: 600;
 }
@@ -79,7 +79,7 @@
 }
 
 .updated {
-    color: #71809c;
+    color: var(--text_muted);
     font-size: 12px;
 }
 
@@ -94,7 +94,7 @@
     height: 28px;
     border: 0;
     background: transparent;
-    color: #15213b;
+    color: var(--text_main);
     cursor: pointer;
     filter: none;
     font-size: 29px;
@@ -105,7 +105,7 @@
 .divider {
     height: 1px;
     margin: 22px 0 24px;
-    background: #e3e8f0;
+    background: var(--color-border);
 }
 
 /*TODO change all buttons with this */
@@ -119,23 +119,22 @@
     background: transparent;
     display: block;
     margin-bottom: 8px;
-    color: #4e607f;
+    color: var(--text_muted);
     font-size: 13px;
     font-weight: 700;
 }
 
 .field-label span {
-    color: #e5485d;
+    color: var(--color_red);
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    border: 1px solid #cfd8e6;
+    border: 1px solid var(--color-border);
     border-radius: 10px;
     outline: none;
-    background: #fff;
-    color: #26344e;
+    color: var(--text_main);
     font: inherit;
     font-size: 16px;
 }
@@ -147,8 +146,8 @@
 
 .form-group input:focus,
 .form-group textarea:focus {
-    border-color: #6373f6;
-    box-shadow: 0 0 0 3px #eaebff;
+    border-color: var(--color_blue_main);
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
 }
 
 .form-group textarea.description {
@@ -168,9 +167,9 @@
     inset: 0;
     overflow: hidden;
     display: block;
-    border: 1px solid #dbe2ed;
+    border: 1px solid var(--color-border);
     border-radius: 10px;
-    background: #e8edf5;
+    background: var(--color-primary-soft);
 }
 
 .field-skeleton::after {
@@ -195,7 +194,7 @@
 .character-count {
     display: block;
     margin-top: 5px;
-    color: #71809c;
+    color: var(--text_muted);
     font-size: 12px;
     text-align: right;
 }
@@ -209,15 +208,15 @@
 .select-like {
     min-height: 44px;
     padding: 0 13px;
-    border: 1px solid #cfd8e6;
+    border: 1px solid var(--color-border);
     border-radius: 9px;
-    color: #293650;
+    color: var(--text_main);
     font-size: 14px;
 }
 
 .chevron {
     margin-left: auto;
-    color: #627392;
+    color: var(--text_muted);
 }
 
 .priority-flag {
@@ -228,7 +227,7 @@
 }
 
 .person-icon {
-    color: #6c7c98;
+    color: var(--text_muted);
     font-size: 22px;
     height: 22px;
     width: 22px;
@@ -286,9 +285,9 @@
 .cancel-button {
     min-width: 104px;
     padding: 0 18px;
-    border: 1px solid #d3ddec;
-    background: #f9fbff;
-    color: #294064;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--text_main);
     cursor: pointer;
 }
 
