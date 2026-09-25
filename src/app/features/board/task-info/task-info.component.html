@@ -37,11 +37,12 @@
         <div class="form-group">
             <div class="field-shell">
                 <textarea
-                    class="description"
+                    #description
                     id="description"
+                    class="description"
                     placeholder="Add a description"
                     formControlName="description"
-                    (input)="autoResize($event)"
+                    (input)="autoResize(description)"
                 ></textarea>
                 @if (isLoading()) {
                     <span class="field-skeleton" aria-label="Loading description"></span>

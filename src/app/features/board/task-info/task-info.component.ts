@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, inject, Input, OnChanges, OnInit, Output, signal } from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostListener, inject, Input, OnChanges, OnInit, Output, signal, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { BoardTask, BoardTaskDetails } from "@interfaces/board-task";
 import { TaskService } from "@services/task/task.service";
@@ -15,6 +15,7 @@ export class TaskInfoComponent implements OnInit {
     isClosing = false;
     private readonly animationDuration = 200;
     private mouseDownTarget: EventTarget | null = null;
+    @ViewChild("description") description!: ElementRef<HTMLTextAreaElement>;
 
     @Input() taskId: string | null = null;
     @Input() boardId: string | null = null;
@@ -54,6 +55,9 @@ export class TaskInfoComponent implements OnInit {
                 title: this.taskInfo.title,
                 description: this.taskInfo.description,
             });
+
+            this.autoResize(this.description.nativeElement);
+
         } finally {
             this.isLoading.set(false);
         }
@@ -120,8 +124,7 @@ export class TaskInfoComponent implements OnInit {
         this.onClose();
     }
 
-    autoResize(event: Event): void {
-        const textarea = event.target as HTMLTextAreaElement;
+    autoResize(textarea: HTMLTextAreaElement): void {
         const styles = getComputedStyle(textarea);
 
         textarea.style.height = 'auto'; // reset the height
