@@ -32,7 +32,7 @@
                 >
                     @for (task of tasks[column.id]; track task.id) {
                         <div cdkDrag>
-                            <div class="task" (click)="onOpenTaskInfo(task)">
+                            <div class="task" (click)="onOpenTaskInfo(task, column)">
                                 <mat-icon fontSet="material-symbols-outlined" class="edit-icon">edit_square</mat-icon>
                                 
                                 <span>{{ task.title }}</span>
@@ -45,7 +45,7 @@
                     }
                 </div>
 
-                <div class="add-card" (click)="onOpenCreateTask(column.id)">
+                <div class="add-card" (click)="onOpenCreateTask(column)">
                     <h4>Create new task</h4>
                 </div>
             </div>
@@ -54,7 +54,7 @@
         @if (isTaskInfo) {
             <app-task-info
                 [boardId]="board?.id ?? null"
-                [columnId]="this.columnId"
+                [column]="this.column"
                 [taskId]="this.taskInfo?.id ?? null"
                 (created)="onTaskCreated($event)"
                 (edited)="onTaskEdited($event)"

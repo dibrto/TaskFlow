@@ -24,7 +24,7 @@ export class TaskService {
         return this.api.execWithoutLoader(() =>
             this.supabase.client
                 .from("board_tasks")
-                .select("id, title, description, board_column_id, position")
+                .select("id, title, description")
                 .eq("id", taskId)
                 .maybeSingle()
         );

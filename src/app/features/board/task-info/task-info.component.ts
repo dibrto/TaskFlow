@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import { BoardTask, BoardTaskDetails } from "@interfaces/board-task";
 import { TaskService } from "@services/task/task.service";
 import { MatIcon } from "@angular/material/icon";
+import { BoardColumn } from "@interfaces/board";
 
 @Component({
     selector: "app-task-info",
@@ -19,7 +20,7 @@ export class TaskInfoComponent implements OnInit {
 
     @Input() taskId: string | null = null;
     @Input() boardId: string | null = null;
-    @Input() columnId: string | null = null;
+    @Input() column: BoardColumn | null = null;
     @Output() created = new EventEmitter<BoardTask>();
 
     // @Input() taskInfo: BoardTaskDetails | null = null;
@@ -99,7 +100,7 @@ export class TaskInfoComponent implements OnInit {
         const req = {
             ...data,
             board_id: this.boardId,
-            board_column_id: this.columnId
+            board_column_id: this.column?.id
         };
         const newTask = await this.taskService.createTask(req);
         this.created.emit(newTask);

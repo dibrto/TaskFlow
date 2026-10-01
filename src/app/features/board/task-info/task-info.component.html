@@ -9,9 +9,9 @@
         <header class="modal-header">
             <div>
                 <h1>{{ isEdit ? 'Edit task' : 'Create task' }}</h1>
-                <!-- TODO: implement buzinnes logic -->
                 <div class="task-meta">
-                    <span class="status-pill"><span class="status-dot"></span>{{taskInfo?.board_column_id}}</span>
+                    <span class="status-pill"><span class="status-dot"></span>{{column?.title}}</span>
+                    <!-- TODO: implement buzinnes logic -->
                     <span class="updated">{{ isEdit ? 'Last updated today at 10:24' : 'Add the details for this task' }}</span>
                 </div>
             </div>

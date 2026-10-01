@@ -6,8 +6,10 @@ export interface BoardTask {
     position: number;
 }
 
-export interface BoardTaskDetails extends BoardTask {
-    
+export interface BoardTaskDetails {
+    id: string;
+    title: string;
+    description: string;
 }
 
 export interface BoardTaskCreate {
