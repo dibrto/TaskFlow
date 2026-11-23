@@ -11,8 +11,13 @@
                 <h1>{{ isEdit ? 'Edit task' : 'Create task' }}</h1>
                 <div class="task-meta">
                     <span class="status-pill"><span class="status-dot"></span>{{column?.title}}</span>
-                    <!-- TODO: implement buzinnes logic -->
-                    <span class="updated">{{ isEdit ? 'Last updated today at 10:24' : 'Add the details for this task' }}</span>
+                    <span class="updated">
+                        @if (!isEdit) {
+                            Add the details for this task
+                        } @else if (taskInfo?.updated_at) {
+                            Last updated {{ lastUpdatedLabel }}
+                        }
+                    </span>
                 </div>
             </div>
             <button class="close" type="button" aria-label="Close" (click)="onClose()">&times;</button>

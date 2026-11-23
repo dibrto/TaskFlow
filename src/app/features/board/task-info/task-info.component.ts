@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, HostListener, inject, Input, OnChanges, OnInit, Output, signal, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostListener, inject, Input, LOCALE_ID, OnChanges, OnInit, Output, signal, ViewChild } from "@angular/core";
+import { formatDate } from "@angular/common";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { BoardTask, BoardTaskDetails } from "@interfaces/board-task";
 import { TaskService } from "@services/task/task.service";
@@ -29,6 +30,7 @@ export class TaskInfoComponent implements OnInit {
 
     private fb = inject(FormBuilder);
     private taskService = inject(TaskService);
+    private locale = inject(LOCALE_ID);
 
     taskInfo: BoardTaskDetails | null = null;
     readonly isLoading = signal(false);
@@ -40,6 +42,35 @@ export class TaskInfoComponent implements OnInit {
 
     get isEdit() {
         return !!this.taskId;
+    }
+
+    get lastUpdatedLabel(): string {
+        if (!this.taskInfo?.updated_at) {
+            return "";
+        }
+
+        const updated = new Date(this.taskInfo.updated_at);
+        const time = formatDate(updated, "HH:mm", this.locale);
+
+        const startOfToday = new Date();
+        startOfToday.setHours(0, 0, 0, 0);
+        const startOfUpdated = new Date(updated);
+        startOfUpdated.setHours(0, 0, 0, 0);
+
+        const dayDiff = Math.round((startOfToday.getTime() - startOfUpdated.getTime()) / 86_400_000);
+
+        if (dayDiff === 0) {
+            return `today at ${time}`;
+        }
+
+        if (dayDiff === 1) {
+            return `yesterday at ${time}`;
+        }
+
+        const sameYear = updated.getFullYear() === new Date().getFullYear();
+        const date = formatDate(updated, sameYear ? "MMM d" : "MMM d, y", this.locale);
+
+        return `on ${date} at ${time}`;
     }
 
     async ngOnInit() {

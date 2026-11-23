@@ -10,6 +10,7 @@ export interface BoardTaskDetails {
     id: string;
     title: string;
     description: string;
+    updated_at: string;
 }
 
 export interface BoardTaskCreate {
