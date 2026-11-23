@@ -1,3 +1,340 @@
 .modal-content {
-    width: 600px;
+    width: min(678px, calc(100vw - 32px));
+    padding: 34px 38px 28px;
+    border-radius: 14px;
+
+    opacity: 0;
+    transform: scale(0.98);
+    animation: modalIn 200ms ease forwards;
+}
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content.closing {
+    animation: modalOut 200ms ease forwards;
+}
+@keyframes modalOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+.modal:has(.modal-content) {
+    align-items: flex-start;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.modal-header h1 {
+    margin: 0 0 10px;
+    color: var(--text_main);
+    font-size: 25px;
+}
+
+.task-meta {
+    display: flex;
+    align-items: baseline;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.status-pill,
+.select-like {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.status-pill {
+    padding: 7px 12px;
+    border-radius: 8px;
+    background: var(--color_main_bg);
+    color: var(--text_main);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+}
+
+.updated {
+    color: var(--text_muted);
+    font-size: 12px;
+}
+
+.form-container {
+    margin: 3rem;
+}
+
+/*TODO change all buttons with this */
+.modal-content .close { 
+    position: static;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 50px;
+    background: transparent;
+    color: var(--text_main);
+    cursor: pointer;
+    filter: none;
+    font-size: 26px;
+    line-height: 24px;
+}
+
+@media (hover: hover) {
+   .modal-content .close:hover { 
+        background: var(--color_main_bg);
+    }
+}
+
+.divider {
+    height: 1px;
+    margin: 22px 0 24px;
+    background: var(--color-border);
+}
+
+/*TODO change all buttons with this */
+.form-group .field-label,
+.detail-field .field-label {
+    position: static;
+    left: auto;
+    top: auto;
+    padding: 0;
+    pointer-events: auto;
+    background: transparent;
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text_muted);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.field-label span {
+    color: var(--color_red);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    outline: none;
+    color: var(--text_main);
+    font: inherit;
+    font-size: 16px;
+}
+
+.form-group input {
+    height: 46px;
+    padding: 0 16px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color_blue_main);
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.form-group textarea.description {
+    min-height: 7rem;
+    height: auto;
+    scrollbar-width: thin;
+}
+
+.field-shell {
+    position: relative;
+}
+
+.field-skeleton {
+    position: relative;
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    overflow: hidden;
+    display: block;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-primary-soft);
+}
+
+.field-skeleton::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / 70%) 50%, transparent 80%);
+    content: "";
+    animation: skeletonShimmer 1.4s ease-in-out infinite;
+    transform: translateX(-100%);
+}
+
+.field-skeleton[aria-label="Loading description"] {
+    min-height: 7rem;
+}
+
+@keyframes skeletonShimmer {
+    to {
+        transform: translateX(100%);
+    }
+}
+
+.character-count {
+    display: block;
+    margin-top: 5px;
+    color: var(--text_muted);
+    font-size: 12px;
+    text-align: right;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.select-like {
+    min-height: 44px;
+    padding: 0 13px;
+    border: 1px solid var(--color-border);
+    border-radius: 9px;
+    color: var(--text_main);
+    font-size: 14px;
+}
+
+.chevron {
+    margin-left: auto;
+    color: var(--text_muted);
+}
+
+.priority-flag {
+    color: #f59e0b;
+    font-size: 22px;
+    height: 22px;
+    width: 22px;
+}
+
+.person-icon {
+    color: var(--text_muted);
+    font-size: 22px;
+    height: 22px;
+    width: 22px;
+}
+
+.footer-divider {
+    margin: 31px 0 23px;
+}
+
+.modal-footer,
+.footer-actions {
+    display: flex;
+    align-items: center;
+}
+
+.modal-footer {
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.footer-actions {
+    gap: 12px;
+}
+
+.delete-button,
+.cancel-button,
+.btn-primary {
+    min-height: 48px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.delete-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 5px;
+    border: 0;
+    background: transparent;
+    color: var(--color_red);
+    cursor: pointer;
+}
+
+.delete-button span {
+    margin-right: 8px;
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.delete-button mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+@media (hover: hover) {
+   .delete-button:hover { 
+        background: var(--color_main_bg);
+    }
+}
+
+.cancel-button {
+    min-width: 104px;
+    padding: 0 18px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--text_main);
+    cursor: pointer;
+}
+
+.btn-primary {
+    min-width: 136px;
+    margin: 0;
+    padding: 0 18px;
+    border: 0;
+}
+
+@media (max-width: 600px) {
+    .modal-content {
+        padding: 26px 22px 22px;
+    }
+
+    .task-meta {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .footer-actions,
+    .cancel-button,
+    .btn-primary {
+        width: 100%;
+    }
 }

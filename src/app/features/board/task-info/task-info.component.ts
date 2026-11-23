@@ -1,44 +1,129 @@
-import { Component, EventEmitter, inject, Input, OnChanges, Output } from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostListener, inject, Input, LOCALE_ID, OnChanges, OnInit, Output, signal, ViewChild } from "@angular/core";
+import { formatDate } from "@angular/common";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { BoardTask } from "@interfaces/board-task";
+import { BoardTask, BoardTaskDetails } from "@interfaces/board-task";
 import { TaskService } from "@services/task/task.service";
+import { MatIcon } from "@angular/material/icon";
+import { BoardColumn } from "@interfaces/board";
 
 @Component({
     selector: "app-task-info",
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, MatIcon],
     templateUrl: "./task-info.component.html",
     styleUrl: "./task-info.component.css"
 })
-export class TaskInfoComponent implements OnChanges {
+export class TaskInfoComponent implements OnInit {
     @Output() close = new EventEmitter<void>();
+    isClosing = false;
+    private readonly animationDuration = 200;
+    private mouseDownTarget: EventTarget | null = null;
+    @ViewChild("description") description!: ElementRef<HTMLTextAreaElement>;
 
+    @Input() taskId: string | null = null;
     @Input() boardId: string | null = null;
-    @Input() columnId: string | null = null;
+    @Input() column: BoardColumn | null = null;
     @Output() created = new EventEmitter<BoardTask>();
 
-    @Input() taskInfo: BoardTask | null = null;
+    // @Input() taskInfo: BoardTaskDetails | null = null;
     @Output() edited = new EventEmitter<BoardTask>();
+    @Output() deleted = new EventEmitter<BoardTask>();
 
     private fb = inject(FormBuilder);
     private taskService = inject(TaskService);
+    private locale = inject(LOCALE_ID);
+
+    taskInfo: BoardTaskDetails | null = null;
+    readonly isLoading = signal(false);
 
     taskForm: FormGroup = this.fb.group({
         title: ["", [Validators.required]],
         description: [""]
     });
 
-    get isTaskInfo() {
-        return !!this.taskInfo;
+    get isEdit() {
+        return !!this.taskId;
     }
 
-    ngOnChanges() {
-        if (this.taskInfo) {
-            this.taskForm.patchValue(this.taskInfo);
+    get lastUpdatedLabel(): string {
+        if (!this.taskInfo?.updated_at) {
+            return "";
         }
+
+        const updated = new Date(this.taskInfo.updated_at);
+        const time = formatDate(updated, "HH:mm", this.locale);
+
+        const startOfToday = new Date();
+        startOfToday.setHours(0, 0, 0, 0);
+        const startOfUpdated = new Date(updated);
+        startOfUpdated.setHours(0, 0, 0, 0);
+
+        const dayDiff = Math.round((startOfToday.getTime() - startOfUpdated.getTime()) / 86_400_000);
+
+        if (dayDiff === 0) {
+            return `today at ${time}`;
+        }
+
+        if (dayDiff === 1) {
+            return `yesterday at ${time}`;
+        }
+
+        const sameYear = updated.getFullYear() === new Date().getFullYear();
+        const date = formatDate(updated, sameYear ? "MMM d" : "MMM d, y", this.locale);
+
+        return `on ${date} at ${time}`;
     }
 
-    onClose() {
-        this.close.emit();
+    async ngOnInit() {
+        if (!this.taskId){
+            return;
+        }
+
+        this.isLoading.set(true);
+
+        try {
+            this.taskInfo = await this.taskService.getTask(this.taskId);
+
+            this.taskForm.patchValue({
+                title: this.taskInfo.title,
+                description: this.taskInfo.description,
+            });
+
+            this.autoResize(this.description.nativeElement);
+
+        } finally {
+            this.isLoading.set(false);
+        }
+    }   
+
+   onClose(): void {
+        if (this.isClosing) {
+            return;
+        }
+
+        this.isClosing = true;
+
+        setTimeout(() => {
+            this.close.emit();
+        }, this.animationDuration);
+    }
+
+    onMouseDown(event: MouseEvent) {
+        this.mouseDownTarget = event.target;
+    }
+
+    onMouseUp(event: MouseEvent) {
+        const startedOnBackdrop = this.mouseDownTarget === event.currentTarget;
+        const endedOnBackdrop = event.target === event.currentTarget;
+
+        if (startedOnBackdrop && endedOnBackdrop)
+            this.onClose();
+
+        this.mouseDownTarget = null;
+    }
+
+    @HostListener('document:keydown.escape')
+    onEscape(): void {
+        this.onClose();
     }
 
     async onCreate() {
@@ -46,7 +131,7 @@ export class TaskInfoComponent implements OnChanges {
         const req = {
             ...data,
             board_id: this.boardId,
-            board_column_id: this.columnId
+            board_column_id: this.column?.id
         };
         const newTask = await this.taskService.createTask(req);
         this.created.emit(newTask);
@@ -59,5 +144,26 @@ export class TaskInfoComponent implements OnChanges {
         const updTask = await this.taskService.editTask(id, data);
         this.edited.emit(updTask);
         this.onClose();
+    }
+
+    async onDelete() {
+        if (!this.taskInfo || !confirm("Do you want to delete the task ?")) {
+            return;
+        }
+
+        const deletedTask = await this.taskService.deleteTask(this.taskInfo.id);
+        this.deleted.emit(deletedTask);
+        this.onClose();
+    }
+
+    autoResize(textarea: HTMLTextAreaElement): void {
+        const styles = getComputedStyle(textarea);
+
+        textarea.style.height = 'auto'; // reset the height
+
+        const borderHeight = parseFloat(styles.borderTopWidth) + parseFloat(styles.borderBottomWidth);
+        const maxHeight = window.innerHeight * 0.49;
+
+        textarea.style.height = `${Math.min(textarea.scrollHeight + borderHeight, maxHeight)}px`;
     }
 }

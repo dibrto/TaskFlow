@@ -35,7 +35,7 @@ export class BoardComponent implements OnInit {
     tasks: Record<string, BoardTask[]> = {};
 
     isTaskInfo: boolean = false;
-    columnId: string | null = null;
+    column: BoardColumn | null = null;
     taskInfo: BoardTask | null = null;
 
     ngOnInit(): void {
@@ -135,17 +135,18 @@ export class BoardComponent implements OnInit {
         }
     }
 
-    onOpenCreateTask(columnId: string) {
+    onOpenCreateTask(column: BoardColumn) {
         this.isTaskInfo = true;
-        this.columnId = columnId;
+        this.column = column;
     }
 
     onTaskCreated(task: BoardTask) {
         this.tasks[task.board_column_id].unshift(task);
     }
 
-    onOpenTaskInfo(task: BoardTask) {
+    onOpenTaskInfo(task: BoardTask, column: BoardColumn) {
         this.isTaskInfo = true;
+        this.column = column;
         this.taskInfo = task;
     }
 
@@ -157,6 +158,12 @@ export class BoardComponent implements OnInit {
         if (index !== -1) {
             list[index] = updatedTask;
         }
+    }
+
+    onTaskDeleted(deletedTask: BoardTask) {
+        this.tasks[deletedTask.board_column_id] = this.tasks[deletedTask.board_column_id].filter(
+            task => task.id !== deletedTask.id
+        );
     }
 
     async onTaskDelete(task: BoardTask) {
@@ -174,7 +181,7 @@ export class BoardComponent implements OnInit {
 
     onCloseTaskInfo() {
         this.isTaskInfo = false;
-        this.columnId = null;
+        this.column = null;
         this.taskInfo = null;
     }
 }
