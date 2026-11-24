@@ -93,14 +93,9 @@ export class BoardComponent implements OnInit {
 
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
             const task = event.container.data[event.currentIndex];
-            const newPos = getNewPosition(event.container.data, event.currentIndex);
 
             try {
-                const res = await this.taskService.editTask(task.id, {
-                    board_column_id: task.board_column_id,
-                    position: newPos
-                });
-                event.container.data[event.currentIndex] = res;
+                await this.saveTaskPosition(event.container.data, event.currentIndex, task.board_column_id);
             } catch {
                 this.tasks[task.board_column_id] = prevState;
             }
@@ -116,21 +111,32 @@ export class BoardComponent implements OnInit {
                 event.previousIndex,
                 event.currentIndex
             );
-            const taskId = event.container.data[event.currentIndex].id;
             const colCurr = event.container.id;
             const colPrev = event.previousContainer.id;
-            const newPos = getNewPosition(event.container.data, event.currentIndex);
 
             try {
-                const res = await this.taskService.editTask(taskId, {
-                    board_column_id: colCurr,
-                    position: newPos
-                });
-                event.container.data[event.currentIndex] = res;
+                await this.saveTaskPosition(event.container.data, event.currentIndex, colCurr);
             } catch {
                 this.tasks[colCurr] = prevStateContainer;
                 this.tasks[colPrev] = prevStatePreviousContainer;
             }
+        }
+    }
+
+    // saves the moved task; when there is no room left between its neighbours, renumbers the whole column
+    private async saveTaskPosition(list: BoardTask[], index: number, columnId: string) {
+        const task = list[index];
+        const newPos = getNewPosition(list, index);
+
+        list[index] = await this.taskService.editTask(task.id, {
+            board_column_id: columnId,
+            position: newPos ?? task.position
+        });
+
+        if (newPos === null) {
+            await this.taskService.setColumnOrder(list.map(t => t.id));
+            // same numbering as set_column_task_order in the database
+            list.forEach((t, i) => (t.position = (list.length - i) * 1000));
         }
     }
 

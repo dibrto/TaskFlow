@@ -41,6 +41,13 @@ export class TaskService {
         );
     }
 
+    // renumbers the tasks of one column; taskIds are in display order, first = top
+    async setColumnOrder(taskIds: string[]): Promise<void> {
+        return this.api.execWithoutLoader(() =>
+            this.supabase.client.rpc("set_column_task_order", { p_task_ids: taskIds })
+        );
+    }
+
     async deleteTask(taskId: string): Promise<BoardTask | null> {
         return this.api.exec(() =>
             this.supabase.client
