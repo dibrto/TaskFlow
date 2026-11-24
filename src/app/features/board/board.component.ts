@@ -4,7 +4,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
-import { switchMap } from "rxjs";
+import { catchError, EMPTY, from, switchMap } from "rxjs";
 
 import { Board, BoardColumn, BoardMember } from "@interfaces/board";
 import { BoardService } from "@services/board/board.service";
@@ -41,9 +41,8 @@ export class BoardComponent implements OnInit {
     ngOnInit(): void {
         this.route.params
             .pipe(
-                switchMap(params => {
-                    return this.boardService.getBoard(params["id"]);
-                })
+                // catch per request so a failed load does not end the stream and the next board still loads
+                switchMap(params => from(this.boardService.getBoard(params["id"])).pipe(catchError(() => EMPTY)))
             )
             .subscribe(data => {
                 if (!data) {
@@ -94,14 +93,9 @@ export class BoardComponent implements OnInit {
 
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
             const task = event.container.data[event.currentIndex];
-            const newPos = getNewPosition(event.container.data, event.currentIndex);
 
             try {
-                const res = await this.taskService.editTask(task.id, {
-                    board_column_id: task.board_column_id,
-                    position: newPos
-                });
-                event.container.data[event.currentIndex] = res;
+                await this.saveTaskPosition(event.container.data, event.currentIndex, task.board_column_id);
             } catch {
                 this.tasks[task.board_column_id] = prevState;
             }
@@ -117,21 +111,32 @@ export class BoardComponent implements OnInit {
                 event.previousIndex,
                 event.currentIndex
             );
-            const taskId = event.container.data[event.currentIndex].id;
             const colCurr = event.container.id;
             const colPrev = event.previousContainer.id;
-            const newPos = getNewPosition(event.container.data, event.currentIndex);
 
             try {
-                const res = await this.taskService.editTask(taskId, {
-                    board_column_id: colCurr,
-                    position: newPos
-                });
-                event.container.data[event.currentIndex] = res;
+                await this.saveTaskPosition(event.container.data, event.currentIndex, colCurr);
             } catch {
                 this.tasks[colCurr] = prevStateContainer;
                 this.tasks[colPrev] = prevStatePreviousContainer;
             }
+        }
+    }
+
+    // saves the moved task; when there is no room left between its neighbours, renumbers the whole column
+    private async saveTaskPosition(list: BoardTask[], index: number, columnId: string) {
+        const task = list[index];
+        const newPos = getNewPosition(list, index);
+
+        list[index] = await this.taskService.editTask(task.id, {
+            board_column_id: columnId,
+            position: newPos ?? task.position
+        });
+
+        if (newPos === null) {
+            await this.taskService.setColumnOrder(list.map(t => t.id));
+            // same numbering as set_column_task_order in the database
+            list.forEach((t, i) => (t.position = (list.length - i) * 1000));
         }
     }
 
@@ -164,19 +169,6 @@ export class BoardComponent implements OnInit {
         this.tasks[deletedTask.board_column_id] = this.tasks[deletedTask.board_column_id].filter(
             task => task.id !== deletedTask.id
         );
-    }
-
-    async onTaskDelete(task: BoardTask) {
-        const res = confirm("Do you want to delete the task ?");
-        if (!res) return;
-
-        try {
-            const id = task.id;
-            const delTask = await this.taskService.deleteTask(id);
-
-            const tasks = this.tasks[delTask.board_column_id].filter(t => t.id !== delTask.id);
-            this.tasks[delTask.board_column_id] = tasks;
-        } catch {}
     }
 
     onCloseTaskInfo() {

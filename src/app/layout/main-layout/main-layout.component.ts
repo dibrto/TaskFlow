@@ -28,7 +28,8 @@ export class MainLayoutComponent implements OnInit {
     }
 
     async onLogout() {
-        await this.authService.logout();
-        this.router.navigate(["/"]);
+        if (await this.authService.logout()) {
+            this.router.navigate(["/"]);
+        }
     }
 }

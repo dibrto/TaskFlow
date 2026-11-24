@@ -1,10 +1,11 @@
-import { Component, ElementRef, EventEmitter, HostListener, inject, Input, LOCALE_ID, OnChanges, OnInit, Output, signal, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostListener, inject, Input, LOCALE_ID, OnInit, Output, signal, ViewChild } from "@angular/core";
 import { formatDate } from "@angular/common";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { BoardTask, BoardTaskDetails } from "@interfaces/board-task";
 import { TaskService } from "@services/task/task.service";
 import { MatIcon } from "@angular/material/icon";
 import { BoardColumn } from "@interfaces/board";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
     selector: "app-task-info",
@@ -24,16 +25,17 @@ export class TaskInfoComponent implements OnInit {
     @Input() column: BoardColumn | null = null;
     @Output() created = new EventEmitter<BoardTask>();
 
-    // @Input() taskInfo: BoardTaskDetails | null = null;
     @Output() edited = new EventEmitter<BoardTask>();
     @Output() deleted = new EventEmitter<BoardTask>();
 
     private fb = inject(FormBuilder);
     private taskService = inject(TaskService);
     private locale = inject(LOCALE_ID);
+    private toast = inject(ToastrService);
 
     taskInfo: BoardTaskDetails | null = null;
     readonly isLoading = signal(false);
+    readonly isSaving = signal(false);
 
     taskForm: FormGroup = this.fb.group({
         title: ["", [Validators.required]],
@@ -81,7 +83,15 @@ export class TaskInfoComponent implements OnInit {
         this.isLoading.set(true);
 
         try {
-            this.taskInfo = await this.taskService.getTask(this.taskId);
+            const task = await this.taskService.getTask(this.taskId);
+
+            if (!task) {
+                this.toast.error("This task no longer exists");
+                this.onClose();
+                return;
+            }
+
+            this.taskInfo = task;
 
             this.taskForm.patchValue({
                 title: this.taskInfo.title,
@@ -89,13 +99,15 @@ export class TaskInfoComponent implements OnInit {
             });
 
             this.autoResize(this.description.nativeElement);
-
+        } catch {
+            // the error toast is shown by ApiService
+            this.onClose();
         } finally {
             this.isLoading.set(false);
         }
     }   
 
-   onClose(): void {
+    onClose(): void {
         if (this.isClosing) {
             return;
         }
@@ -127,23 +139,25 @@ export class TaskInfoComponent implements OnInit {
     }
 
     async onCreate() {
-        const data = this.taskForm.value;
-        const req = {
-            ...data,
-            board_id: this.boardId,
-            board_column_id: this.column?.id
-        };
-        const newTask = await this.taskService.createTask(req);
-        this.created.emit(newTask);
-        this.onClose();
+        await this.save(async () => {
+            const data = this.taskForm.value;
+            const req = {
+                ...data,
+                board_id: this.boardId,
+                board_column_id: this.column?.id
+            };
+            const newTask = await this.taskService.createTask(req);
+            this.created.emit(newTask);
+        });
     }
 
     async onEdit() {
-        const data = this.taskForm.value;
-        const id = this.taskInfo?.id ?? "";
-        const updTask = await this.taskService.editTask(id, data);
-        this.edited.emit(updTask);
-        this.onClose();
+        await this.save(async () => {
+            const data = this.taskForm.value;
+            const id = this.taskInfo?.id ?? "";
+            const updTask = await this.taskService.editTask(id, data);
+            this.edited.emit(updTask);
+        });
     }
 
     async onDelete() {
@@ -151,9 +165,32 @@ export class TaskInfoComponent implements OnInit {
             return;
         }
 
-        const deletedTask = await this.taskService.deleteTask(this.taskInfo.id);
-        this.deleted.emit(deletedTask);
-        this.onClose();
+        const id = this.taskInfo.id;
+
+        await this.save(async () => {
+            const deletedTask = await this.taskService.deleteTask(id);
+            if (deletedTask) {
+                this.deleted.emit(deletedTask);
+            }
+        });
+    }
+
+    // runs one request at a time and closes the modal only on success
+    private async save(action: () => Promise<void>) {
+        if (this.isSaving()) {
+            return;
+        }
+
+        this.isSaving.set(true);
+
+        try {
+            await action();
+            this.onClose();
+        } catch {
+            // the error toast is shown by ApiService; the modal stays open so nothing typed is lost
+        } finally {
+            this.isSaving.set(false);
+        }
     }
 
     autoResize(textarea: HTMLTextAreaElement): void {

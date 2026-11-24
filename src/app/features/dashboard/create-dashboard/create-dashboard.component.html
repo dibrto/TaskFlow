@@ -8,7 +8,7 @@
         </div>
 
         <div class="form-group">
-            <input type="text" id="title" placeholder="" formControlName="title" />
+            <input type="text" id="title" placeholder="" formControlName="title" maxlength="100" />
             <label for="title">Title</label>
 
             @if (createBoardForm.get("title")?.touched && createBoardForm.get("title")?.invalid) {
@@ -17,7 +17,7 @@
         </div>
 
         <div class="form-group">
-            <input type="text" id="description" placeholder="" formControlName="description" />
+            <input type="text" id="description" placeholder="" formControlName="description" maxlength="500" />
             <label for="description">Description</label>
         </div>
 

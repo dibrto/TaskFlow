@@ -59,7 +59,7 @@
 }
 
 .active {
-    background: var(--color-blue_main);
+    background: var(--color_blue_main);
 }
 
 .logout {

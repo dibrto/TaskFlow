@@ -20,7 +20,7 @@ export class TaskService {
         );
     }
 
-    async getTask(taskId: string): Promise<BoardTaskDetails> {
+    async getTask(taskId: string): Promise<BoardTaskDetails | null> {
         return this.api.execWithoutLoader(() =>
             this.supabase.client
                 .from("board_tasks")
@@ -41,7 +41,14 @@ export class TaskService {
         );
     }
 
-    async deleteTask(taskId: string): Promise<BoardTask> {
+    // renumbers the tasks of one column; taskIds are in display order, first = top
+    async setColumnOrder(taskIds: string[]): Promise<void> {
+        return this.api.execWithoutLoader(() =>
+            this.supabase.client.rpc("set_column_task_order", { p_task_ids: taskIds })
+        );
+    }
+
+    async deleteTask(taskId: string): Promise<BoardTask | null> {
         return this.api.exec(() =>
             this.supabase.client
                 .from("board_tasks")

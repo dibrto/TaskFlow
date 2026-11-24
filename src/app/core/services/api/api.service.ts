@@ -16,7 +16,6 @@ export class ApiService {
         const res = await promise;
 
         if (res?.error) throw res.error;
-        // if (!res || !("data" in res)) throw new Error("Invalid response");
 
         return res.data;
     }
@@ -26,8 +25,6 @@ export class ApiService {
             this.toast.error("No internet");
             return;
         }
-
-        // if (err.status === 401) return;
 
         this.toast.error(err.message || "Something went wrong");
     }
@@ -53,9 +50,9 @@ export class ApiService {
         });
     }
 
-    execWithoutLoader<T>(fn: () => any): Promise<T> {
+    async execWithoutLoader<T>(fn: () => any): Promise<T> {
         try {
-            return this.handleResponse<T>(fn());
+            return await this.handleResponse<T>(fn());
         } catch (err) {
             this.handleError(err);
             throw err;

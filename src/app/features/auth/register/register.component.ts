@@ -1,8 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
-import { AuthError } from "@supabase/supabase-js";
-import { Toast, ToastrService } from "ngx-toastr";
 
 import { AuthService } from "@services/auth/auth.service";
 import passwordMatchValidator from "@validators/password-match.validator";
@@ -16,7 +14,6 @@ import passwordMatchValidator from "@validators/password-match.validator";
 export class RegisterComponent {
     private authService = inject(AuthService);
     private fb = inject(FormBuilder);
-    private toast = inject(ToastrService);
     private router = inject(Router);
 
     registerForm: FormGroup = this.fb.group({
@@ -44,9 +41,12 @@ export class RegisterComponent {
             password: formValue.passwords.password,
         };
 
-        await this.authService.register(regData);
-
-        this.authService.login({ email: regData.email, password: regData.password });
-        await this.router.navigate(["/dashboard"]);
+        try {
+            // signUp already signs the user in (email confirmation is disabled in Supabase)
+            await this.authService.register(regData);
+            await this.router.navigate(["/dashboard"]);
+        } catch {
+            // the error toast is shown by ApiService
+        }
     }
 }

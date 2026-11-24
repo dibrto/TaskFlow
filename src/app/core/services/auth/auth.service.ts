@@ -19,7 +19,15 @@ export class AuthService {
     constructor() {
         // sync login/logout
         this.supabase.client.auth.onAuthStateChange((event, session) => {
-            this.user.set(session?.user ?? null);
+            const nextUser = session?.user ?? null;
+
+            // another user (or nobody) is signed in now, including an expired session:
+            // drop the cached boards of the previous user
+            if (nextUser?.id !== this.user()?.id) {
+                this.boardService.clearBoards();
+            }
+
+            this.user.set(nextUser);
         });
     }
 
@@ -47,10 +55,14 @@ export class AuthService {
         return this.api.exec(() => this.supabase.client.auth.signInWithPassword(req));
     }
 
-    async logout() {
+    // returns false when signing out failed and the user is still signed in
+    async logout(): Promise<boolean> {
         try {
             await this.api.exec(() => this.supabase.client.auth.signOut());
-            this.boardService.clearBoards();
-        } catch {}
+            return true;
+        } catch {
+            // the error toast is shown by ApiService
+            return false;
+        }
     }
 }
