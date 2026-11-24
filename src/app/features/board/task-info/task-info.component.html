@@ -91,10 +91,10 @@
 
         <footer class="modal-footer">
             @if (isEdit) {
-                <button class="delete-button" type="button" (click)="onDelete()"><mat-icon fontSet="material-symbols-outlined">delete</mat-icon> Delete task</button>
+                <button class="delete-button" type="button" [disabled]="isSaving()" (click)="onDelete()"><mat-icon fontSet="material-symbols-outlined">delete</mat-icon> Delete task</button>
             }
             <div class="footer-actions">
-                <button class="btn-primary" type="submit" [disabled]="taskForm.invalid">{{ isEdit ? 'Save changes' : 'Create task' }}</button>
+                <button class="btn-primary" type="submit" [disabled]="taskForm.invalid || isSaving()">{{ isEdit ? 'Save changes' : 'Create task' }}</button>
                 <button class="cancel-button" type="button" (click)="onClose()">Cancel</button>
             </div>
         </footer>

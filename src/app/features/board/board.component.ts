@@ -4,7 +4,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
-import { switchMap } from "rxjs";
+import { catchError, EMPTY, from, switchMap } from "rxjs";
 
 import { Board, BoardColumn, BoardMember } from "@interfaces/board";
 import { BoardService } from "@services/board/board.service";
@@ -41,9 +41,8 @@ export class BoardComponent implements OnInit {
     ngOnInit(): void {
         this.route.params
             .pipe(
-                switchMap(params => {
-                    return this.boardService.getBoard(params["id"]);
-                })
+                // catch per request so a failed load does not end the stream and the next board still loads
+                switchMap(params => from(this.boardService.getBoard(params["id"])).pipe(catchError(() => EMPTY)))
             )
             .subscribe(data => {
                 if (!data) {
@@ -164,19 +163,6 @@ export class BoardComponent implements OnInit {
         this.tasks[deletedTask.board_column_id] = this.tasks[deletedTask.board_column_id].filter(
             task => task.id !== deletedTask.id
         );
-    }
-
-    async onTaskDelete(task: BoardTask) {
-        const res = confirm("Do you want to delete the task ?");
-        if (!res) return;
-
-        try {
-            const id = task.id;
-            const delTask = await this.taskService.deleteTask(id);
-
-            const tasks = this.tasks[delTask.board_column_id].filter(t => t.id !== delTask.id);
-            this.tasks[delTask.board_column_id] = tasks;
-        } catch {}
     }
 
     onCloseTaskInfo() {

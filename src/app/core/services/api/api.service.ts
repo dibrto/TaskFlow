@@ -53,9 +53,9 @@ export class ApiService {
         });
     }
 
-    execWithoutLoader<T>(fn: () => any): Promise<T> {
+    async execWithoutLoader<T>(fn: () => any): Promise<T> {
         try {
-            return this.handleResponse<T>(fn());
+            return await this.handleResponse<T>(fn());
         } catch (err) {
             this.handleError(err);
             throw err;

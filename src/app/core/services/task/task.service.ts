@@ -20,7 +20,7 @@ export class TaskService {
         );
     }
 
-    async getTask(taskId: string): Promise<BoardTaskDetails> {
+    async getTask(taskId: string): Promise<BoardTaskDetails | null> {
         return this.api.execWithoutLoader(() =>
             this.supabase.client
                 .from("board_tasks")
@@ -41,7 +41,7 @@ export class TaskService {
         );
     }
 
-    async deleteTask(taskId: string): Promise<BoardTask> {
+    async deleteTask(taskId: string): Promise<BoardTask | null> {
         return this.api.exec(() =>
             this.supabase.client
                 .from("board_tasks")

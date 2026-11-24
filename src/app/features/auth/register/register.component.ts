@@ -44,9 +44,12 @@ export class RegisterComponent {
             password: formValue.passwords.password,
         };
 
-        await this.authService.register(regData);
-
-        this.authService.login({ email: regData.email, password: regData.password });
-        await this.router.navigate(["/dashboard"]);
+        try {
+            // signUp already signs the user in (email confirmation is disabled in Supabase)
+            await this.authService.register(regData);
+            await this.router.navigate(["/dashboard"]);
+        } catch {
+            // the error toast is shown by ApiService
+        }
     }
 }
