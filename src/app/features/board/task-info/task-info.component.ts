@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, inject, Input, LOCALE_ID, OnChanges, OnInit, Output, signal, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostListener, inject, Input, LOCALE_ID, OnInit, Output, signal, ViewChild } from "@angular/core";
 import { formatDate } from "@angular/common";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { BoardTask, BoardTaskDetails } from "@interfaces/board-task";
@@ -25,7 +25,6 @@ export class TaskInfoComponent implements OnInit {
     @Input() column: BoardColumn | null = null;
     @Output() created = new EventEmitter<BoardTask>();
 
-    // @Input() taskInfo: BoardTaskDetails | null = null;
     @Output() edited = new EventEmitter<BoardTask>();
     @Output() deleted = new EventEmitter<BoardTask>();
 
@@ -108,7 +107,7 @@ export class TaskInfoComponent implements OnInit {
         }
     }   
 
-   onClose(): void {
+    onClose(): void {
         if (this.isClosing) {
             return;
         }

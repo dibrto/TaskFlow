@@ -1,8 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
-import { AuthError } from "@supabase/supabase-js";
-import { Toast, ToastrService } from "ngx-toastr";
 
 import { AuthService } from "@services/auth/auth.service";
 import passwordMatchValidator from "@validators/password-match.validator";
@@ -16,7 +14,6 @@ import passwordMatchValidator from "@validators/password-match.validator";
 export class RegisterComponent {
     private authService = inject(AuthService);
     private fb = inject(FormBuilder);
-    private toast = inject(ToastrService);
     private router = inject(Router);
 
     registerForm: FormGroup = this.fb.group({

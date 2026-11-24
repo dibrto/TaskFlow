@@ -16,8 +16,8 @@ import { MatMenuModule } from "@angular/material/menu";
 export class HomeComponent {
     tasks = [
         { id: 1, title: "Design landing page", description: false },
-        { id: 1, title: "Prepare backlog", description: true },
-        { id: 1, title: "Invite team", description: false }
+        { id: 2, title: "Prepare backlog", description: true },
+        { id: 3, title: "Invite team", description: false }
     ];
 
     drop(event: CdkDragDrop<any[]>) {

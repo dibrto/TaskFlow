@@ -16,7 +16,6 @@ export class ApiService {
         const res = await promise;
 
         if (res?.error) throw res.error;
-        // if (!res || !("data" in res)) throw new Error("Invalid response");
 
         return res.data;
     }
@@ -26,8 +25,6 @@ export class ApiService {
             this.toast.error("No internet");
             return;
         }
-
-        // if (err.status === 401) return;
 
         this.toast.error(err.message || "Something went wrong");
     }
