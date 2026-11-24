@@ -28,7 +28,7 @@
         <div class="form-group">
             <label class="field-label" for="title">Title <span>*</span></label>
             <div class="field-shell">
-                <input type="text" id="title" placeholder="Task title" formControlName="title" />
+                <input type="text" id="title" placeholder="Task title" formControlName="title" maxlength="255" />
                 @if (isLoading()) {
                     <span class="field-skeleton" aria-label="Loading title"></span>
                 }
@@ -47,6 +47,7 @@
                     class="description"
                     placeholder="Add a description"
                     formControlName="description"
+                    maxlength="2000"
                     (input)="autoResize(description)"
                 ></textarea>
                 @if (isLoading()) {
